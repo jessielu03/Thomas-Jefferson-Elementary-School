@@ -27,6 +27,10 @@ root.render(
       <Route path='/' element = {<App/>}/>
       <Route path = 'teacher' element={<Teacher/>}/>
       <Route path = 'administrator' element={<Administrator/>}/>
+      <Route path='administrator/AdminClassPage' element={<AdminClassPage/>}/>
+      <Route path='administrator/StudentDirectory' element={<StudentDirectory/>}/>
+      <Route path='administrator/TeacherDirectory' element={<TeacherDirectory/>}/>
+
     </Routes>
   </BrowserRouter>
 );

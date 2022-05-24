@@ -4,12 +4,12 @@ function Teacher(){
     return(
         <nav>
             <Link to='/'>Home</Link>
-            {/* 
-                Links to:
-                    - student directory
-                    - teacher directory
-                    - link to their class page
-            */}
+            {
+                // List grades of each student
+                // can edit each student's grades - 
+                // can map the students out too
+            
+            } 
         </nav>
     );
 }export default Teacher;
