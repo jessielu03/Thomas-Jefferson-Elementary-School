@@ -1,5 +1,7 @@
 import {Link} from "react-router-dom";
 import React from "react";
+import db from './database.js';
+
 function Teacher(){
     return(
         <nav>
