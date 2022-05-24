@@ -4,6 +4,8 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
+import Administrator from './Components/Administrators';
+import Teacher from './Components/Teacher';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(

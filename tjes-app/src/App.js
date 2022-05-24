@@ -1,12 +1,13 @@
 import './App.css';
 import React from "react";
-import { Routes, Route, Link} from "react-router-dom";
+import {Link} from "react-router-dom";
 
 function App() {
   return (
     <div>
       <nav>
         <Link to='/teacher'>Teachers</Link>
+        <br></br>
         <Link to='/administrators'>Administrators</Link>
       </nav>
     </div>
