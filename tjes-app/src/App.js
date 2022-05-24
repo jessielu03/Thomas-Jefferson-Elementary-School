@@ -8,7 +8,7 @@ function App() {
       <nav>
         <Link to='/teacher'>Teachers</Link>
         <br></br>
-        <Link to='/administrators'>Administrators</Link>
+        <Link to='/administrator'>Administrators</Link>
       </nav>
     </div>
   );
