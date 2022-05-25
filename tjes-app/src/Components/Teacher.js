@@ -1,6 +1,6 @@
 import {Link} from "react-router-dom";
 import React from "react";
-import db from './database.js';
+import db from '../database.js';
 
 function Teacher(){
     return(

@@ -5,8 +5,8 @@ import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 import Administrator from './Components/AdminFile/Administrator';
-import Teacher from './Components/TeacherFile/Teacher';
-import StudentDirectory from './Components/AdminFile/StudentDirectory';
+import Teacher from './Components/Teacher';
+import StudentDirectory from './Components/StudentDirectory';
 import TeacherDirectory from './Components/AdminFile/TeacherDirectory';
 import AdminClassPage from './Components/AdminFile/AdminClassPage';
 
