@@ -41,6 +41,7 @@ function Teacher(){
         .catch((e) => console.error(e))
     } 
 
+
     return(
         <nav>
             <Link to='/'>Home</Link>
@@ -48,12 +49,13 @@ function Teacher(){
                 // List grades of each student
                 // can edit each student's grades - 
                 // can map the students out too
-            
+          
             <div className="App">
                 <h1>Teacher Dashboard</h1>
                 <h3>Students:</h3>
                 {students.map((Students) => <StudentObj key={Students.id} id={Students.id} studentFirst={Students.FirstName} studentLast={Students.LastName} gradeLetter={Students.GradeLevel} upvote={upvote}/>)}
             </div>
+
             } 
         </nav>
     );
