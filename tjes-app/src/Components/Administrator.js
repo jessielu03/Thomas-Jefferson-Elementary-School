@@ -1,16 +1,22 @@
 import {Link} from "react-router-dom";
 import React from "react";
-import db from './database.js';
-import {useEffect} from "react"
+import db from '../database.js';
+import {useEffect} from "react";
+import { useState } from "react";
+import { getFirestore, collection, addDoc, doc, getDocs, updateDoc, increment } from "firebase/firestore";
+
 
 function Administrator(){
+
+    const [responses, setResponses] = useState([])
+
 
     useEffect(() => {
         const classes = []
         getDocs(collection(db, "Classes"))
         .then((allClasses) => {
           allClasses.forEach((c) => classes.push({ id: c.id, ...c.data() }))
-          classes.sort((a, b) => )  // TODO
+          classes.sort()  // TODO
           setResponses(responses)
         })
       }, [db])

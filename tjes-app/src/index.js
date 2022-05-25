@@ -4,11 +4,11 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
-import Administrator from './Components/AdminFile/Administrator';
+import Administrator from './Components/Administrator';
 import Teacher from './Components/Teacher';
 import StudentDirectory from './Components/StudentDirectory';
-import TeacherDirectory from './Components/AdminFile/TeacherDirectory';
-import AdminClassPage from './Components/AdminFile/AdminClassPage';
+import TeacherDirectory from './Components/TeacherDirectory';
+import AdminClassPage from './Components/AdminClassPage';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
