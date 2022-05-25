@@ -3,7 +3,7 @@ import {initializeApp} from "firebase/app"
 import { getFirestore, collection, addDoc, doc, getDocs, updateDoc, increment } from "firebase/firestore";
 import {useState, useEffect, useRef} from "react"
 import db from "../database.js"
-import IndivStudent from "./AdminFile/indivStudentComp.js"
+import IndivStudent from "./indivStudentComp.js"
 
 // create a form where admin can input all fields to create new student
 function StudentDirectory(){
