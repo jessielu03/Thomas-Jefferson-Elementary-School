@@ -1,11 +1,13 @@
 import {Link} from "react-router-dom";
 import React from "react";
+import AdminClassPage from './AdminClassPage';
 function Administrator(){
     return(
         <nav>
             <Link to='/'>Home</Link>
             <Link to='administrator/TeacherDirectory'>Teacher Directory</Link>
             <Link to='administrator/StudentDirectory'>Student Directory</Link>
+            <AdminClassPage></AdminClassPage>
             
 
             {/* links to
