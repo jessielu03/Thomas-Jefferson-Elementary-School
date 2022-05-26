@@ -6,10 +6,13 @@ import db from "../database.js"
 import IndivTeacher from "./IndivTeacherComp.js"
 import {Link} from "react-router-dom";
 import Button from '@mui/material/Button';
-import SchoolIcon from '@mui/icons-material/School';
 import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
-import {headerStyle,container} from './pagescss.js';
+import {headerStyle, container, tabStyle} from './pagescss.js';
+import SchoolIcon from '@mui/icons-material/School';
+import HomeIcon from '@mui/icons-material/Home';
+import EventIcon from '@mui/icons-material/Event';
+import SpeedIcon from '@mui/icons-material/Speed';
 
 
 import Grid from "@material-ui/core/Grid";
@@ -80,12 +83,18 @@ function TeacherDirectory(){
       return (//put in links above the h1
         <div style ={container}>
           <div style={headerStyle}>
-          <h1> Teacher Directory</h1>
+            <br></br>
+            <br></br>
+            <h1>TEACHER DIRECTORY</h1>
+            <br></br>
             <Tabs centered>
-                <Tab label="Home" href="/Administrator" />
-                <Tab label="Student Directory" href="./StudentDirectory" />
+                <Tab style={tabStyle} label={<><HomeIcon />Home</>} href="/" />
+                <Tab style={tabStyle} label={<><EventIcon />Calendar</>} href="/" />
+                <Tab style={tabStyle} label={<><SpeedIcon />Admin Dashboard</>} href="/administrator" />
+                <Tab style={tabStyle} label={<><SchoolIcon />Student Directory</>} href="./StudentDirectory" />
             </Tabs>
-            </div>
+            <br></br>
+          </div>
           <div className="teacherDirectory">
             <center>
               <h3>Add a Teacher:</h3>

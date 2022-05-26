@@ -10,14 +10,13 @@ import EventIcon from '@mui/icons-material/Event';
 import { getFirestore, collection, addDoc, doc, getDocs, updateDoc, increment } from "firebase/firestore";
 import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
-import { common } from '@mui/material/colors';
+import {headerStyle, container, tabStyle} from './pagescss.js';
 import TextField from '@mui/material/TextField';
 import Grid from '@mui/material/Grid';
-import Box from '@mui/material/Box';
 import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
-import Select, { SelectChangeEvent } from '@mui/material/Select';
+import Select from '@mui/material/Select';
 
 function Administrator() {
 
@@ -32,7 +31,7 @@ function Administrator() {
     getDocs(collection(db, "Classes"))
     .then((allClasses) => {
       allClasses.forEach((c) => classes.push({ id: c.id, ...c.data() }))
-      classes.sort()  // TODO
+      classes.sort((a, b) => (a.name > b.name) ? 1 : -1)  // TODO
       setClassList(classes)
     })
     const teachers = []
@@ -54,27 +53,10 @@ function Administrator() {
     }
     addDoc(collection(db, "Classes"), newClass) // add the new response 
     .then((docRef) => {
-      setClassList([...classList, {id: docRef.id, ...newClass}])  // update the state variable
+      setClassList([...classList, {id: docRef.id, ...newClass}]);
     })
     .catch((e) => console.error(e))
   }
-
-  const headerStyle = {
-    backgroundColor:"#673AB7",
-    color: common.white,
-    alignItems:"center",
-    justifyContent:'center',
-  }
-  const container ={
-      display:"flex",
-      flexGrow:'1',
-      flexDirection: 'column',
-      textAlign: 'center'
-  }
-  const tabStyle = {
-    color: common.white,
-    textDecoration: 'none'
-  };
 
   return(
     <div style ={container}>
@@ -99,7 +81,7 @@ function Administrator() {
         <Grid item xs><p fullWidth>    </p></Grid>
         <Grid item xs><p fullWidth>    </p></Grid>
         <Grid item xs><p fullWidth>    </p></Grid>
-        <Grid item xs><p fullWidth>New Class: </p></Grid>
+        <Grid item xs><p fullWidth><b>Add a class: </b></p></Grid>
         <Grid item xs>
             <TextField fullWidth
               id="standard-basic" 
@@ -126,7 +108,8 @@ function Administrator() {
           </FormControl>
         </Grid>
         <Grid item xs><Button onClick={addClass}
-          sx={{ color: 'white', backgroundColor: '#673AB7' }}>Add</Button></Grid>
+          sx={{ color: 'white', backgroundColor: '#673AB7' }}
+          >Add</Button></Grid>
         <Grid item xs><p fullWidth>    </p></Grid>
         <Grid item xs><p fullWidth>    </p></Grid>
         <Grid item xs><p fullWidth>    </p></Grid>
@@ -145,7 +128,8 @@ function Administrator() {
 
           <Button
           variant='outlined'
-          sx={{ color: 'purple', borderColor: 'purple' }}>Grade {c.name}</Button>
+          sx={{ color: '#673AB7', borderColor: '#673AB7' }}>Grade {c.name}</Button>
+          
         </Link>)
       }
     </div>
