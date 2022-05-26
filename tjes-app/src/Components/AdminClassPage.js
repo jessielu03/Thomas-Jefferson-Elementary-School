@@ -23,6 +23,7 @@ function AdminClassPage(props){
     const id = location.state?.classID;
     const [thisClass, setClass] = useState([])
     const [classList, setClassList] = useState([]);
+    //const gradeName = className.charAt(0);
     
     useEffect(() => {
         // const classes = [];
