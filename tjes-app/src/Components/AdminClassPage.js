@@ -6,8 +6,8 @@ import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
 import db from '../database';
 import { useLocation } from 'react-router-dom';
-import { updateDoc,doc } from 'firebase/firestore';
-import { dividerClasses } from '@mui/material';
+import { updateDoc,doc,getDoc,collection, getDocs, increment } from 'firebase/firestore';
+import {headerStyle,container} from './pagescss.js';
 function AdminClassPage(props){
     // Props include whatever came from the data base
     const location = useLocation();
@@ -15,28 +15,26 @@ function AdminClassPage(props){
     const[gradeLevel, setGradeLevel] = useState(location.state?.gradeLevel);
     const[className, setClassName] = useState(location.state?.className);
     const id = location.state?.classID;
+    const [thisClass, setClass] = useState([])
+    const [classList, setClassList] = useState([]);
 
+    useEffect(() => {
+        // getDoc(doc(collection(db, "Classes",id)))
+        // .then((doc) => {
+        // thisClass.push({ id: doc.id, ...doc.data()})
+        //   setClass(doc.data());
+        // })
+    }, [])   
     // Check what the actual fields are called
     const update = (id) =>{
-        updateDoc(doc(db,"Class",id),{
+        updateDoc(doc(db, "Classes", id), {
             teacher: teacherName,
-            name: className,
-            grade: gradeLevel
+            name:className,
+            grade:gradeLevel 
+        })
+        .then((doc) => {
+            setTeacherName(teacherName);
        });
-    }
-    const headerStyle = {
-        backgroundColor:"#77a6a1",
-        // padding:'1.5em',
-        alignItems:"center",
-        justifyContent:'center',
-        fontFamily:"Hanalei Fill"
-        // borderRadius:"25%"
-    }
-    const container ={
-        display:"flex",
-        flexGrow:'1',
-        flexDirection: 'column',
-        textAlign: 'center'
     }
     return(
         <div style ={container}>
@@ -45,16 +43,19 @@ function AdminClassPage(props){
             <h1> Class {className}'s admin page</h1>
             <Tabs centered>
                 <Tab label="Home" href="/Administrator" />
-                <Tab label="Student Directory" href="/StudentDirectory" />
-                <Tab label="Teacher Directory" href="/TeacherDirectory" />
+                <Tab label="Student Directory" href="./StudentDirectory" />
+                <Tab label="Teacher Directory" href="./TeacherDirectory" />
             </Tabs>
             </div>
             <div>
+
+            {/* {classList.map((c) =>  */}
+            {/* <h3>{thisClass.grade}</h3> */}
+            {/* )} */}
+
             <Grid container spacing={3}>
             <Grid item xs>
-                <TextField 
-                id="standard-basic" 
-                variant="standard"
+                <TextField id="standard-basic" variant="standard"
                 helperText = "Teacher"
                 onChange={(e) => setTeacherName(e.target.value)}
                 inputProps={{
@@ -62,9 +63,7 @@ function AdminClassPage(props){
                 }}/>
             </Grid>
             <Grid item xs>
-                <TextField 
-                id="standard-basic" 
-                variant="standard"
+                <TextField id="standard-basic" variant="standard"
                 helperText = "Grade Level"
                 inputProps={{
                     defaultValue: gradeLevel
@@ -73,9 +72,7 @@ function AdminClassPage(props){
                 />
             </Grid>
             <Grid item xs>
-                <TextField 
-                id="standard-basic" 
-                variant="standard"
+                <TextField id="standard-basic" variant="standard"
                 helperText = "Class"
                 inputProps={{
                     defaultValue: className
@@ -88,16 +85,18 @@ function AdminClassPage(props){
                 Grade level: {gradeLevel} |
                 Class: {className}
             </div>
+            {id}
             {/* <h5>Edit Profile Button</h5> */}
             {/* <body> -> which turns the fields into textfields that you can input into?</body> */}
             <div> 
                 {/* Button to change info in firebase */}
-                <Button 
-                onClick = {() => update()}
+                <Button onClick = {() => update(id)}
                 >Edit</Button>
             </div>
             <div>
                 <h2>Class Roster</h2>
+                {/* {classes.map((Student) => <h3>{Student.FirstName}</h3>)} */}
+                {/* {thisClass.grade} */}
             </div>
         </div>
     );

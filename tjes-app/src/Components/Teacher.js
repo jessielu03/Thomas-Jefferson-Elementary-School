@@ -94,6 +94,7 @@ function Teacher(){
 
 
     return(
+      
         <ThemeProvider theme={mdTheme}>
           <Box sx={{ display: 'flex' }}>
             <CssBaseline />
