@@ -25,8 +25,8 @@ function Administrator(){
         <nav>
             <Link to='/'>Home</Link>
             <h1>Welcome, admin</h1>
-            <Link to='administrator/TeacherDirectory'>Teacher Directory</Link>
-            <Link to='administrator/StudentDirectory'>Student Directory</Link>
+            <Link to='TeacherDirectory'>Teacher Directory</Link>
+            <Link to='StudentDirectory'>Student Directory</Link>
 
             {/* links to
                     -use mapping to create links to each
