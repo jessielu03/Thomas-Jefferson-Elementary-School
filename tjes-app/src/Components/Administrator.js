@@ -139,8 +139,10 @@ function Administrator() {
       <h4>Class Pages:</h4>
     
       {classList.map((c) => 
+
         // parameters passed to adminclasspage.js
         <Link to='AdminClassPage' state={{ className: c.name, classID: c.id, teacherName: c.teacher}}>
+
           <Button
           variant='outlined'
           sx={{ color: 'purple', borderColor: 'purple' }}>Grade {c.name}</Button>

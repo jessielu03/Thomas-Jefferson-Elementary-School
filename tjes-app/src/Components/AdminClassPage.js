@@ -17,14 +17,32 @@ function AdminClassPage(props){
     const id = location.state?.classID;
     const [thisClass, setClass] = useState([])
     const [classList, setClassList] = useState([]);
-
+    const gradeName = className.charAt(0);
+    
     useEffect(() => {
-        // getDoc(doc(collection(db, "Classes",id)))
-        // .then((doc) => {
-        // thisClass.push({ id: doc.id, ...doc.data()})
-        //   setClass(doc.data());
-        // })
-    }, [])   
+        // const classes = [];
+        // getDocs(collection(db, "Classes"))
+        // .then((allClasses) => {
+        //   allClasses.forEach((c) => classes.push({ id: c.id, ...c.data() }))
+        //   classes.sort();  // TODO
+        //   setClassList(classes);
+    const students = []
+      getDocs(collection(db, "Students"))
+      .then((allStudents) => {
+        allStudents.forEach((c) => students.push({ id: c.id, ...c.data() }))
+        students.sort()
+        // setClassList(students);
+        students.forEach((s) =>{
+            if(s.GradeLevel === gradeLevel)
+            classList.push(s);
+        })
+        // // setClassList((a) => (a.Class === id) ? classList.push(a):console.log("not a part of this class"))
+        setClassList(classList);
+      })
+    //   getDoc(c.teacher)
+    //   .then((doc) => thisClass.push(doc.data())))
+  }, [db])
+
     // Check what the actual fields are called
     const update = (id) =>{
         updateDoc(doc(db, "Classes", id), {
@@ -48,11 +66,6 @@ function AdminClassPage(props){
             </Tabs>
             </div>
             <div>
-
-            {/* {classList.map((c) =>  */}
-            {/* <h3>{thisClass.grade}</h3> */}
-            {/* )} */}
-
             <Grid container spacing={3}>
             <Grid item xs>
                 <TextField id="standard-basic" variant="standard"
@@ -86,8 +99,6 @@ function AdminClassPage(props){
                 Class: {className}
             </div>
             {id}
-            {/* <h5>Edit Profile Button</h5> */}
-            {/* <body> -> which turns the fields into textfields that you can input into?</body> */}
             <div> 
                 {/* Button to change info in firebase */}
                 <Button onClick = {() => update(id)}
@@ -95,9 +106,8 @@ function AdminClassPage(props){
             </div>
             <div>
                 <h2>Class Roster</h2>
-                {/* {classes.map((Student) => <h3>{Student.FirstName}</h3>)} */}
-                {/* {thisClass.grade} */}
             </div>
+            {classList.map((c) => <h3>{c.FirstName}</h3>)}
         </div>
     );
 
