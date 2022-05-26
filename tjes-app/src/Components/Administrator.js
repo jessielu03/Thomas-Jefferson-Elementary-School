@@ -8,7 +8,6 @@ import Divider from '@mui/material/Divider';
 import SchoolIcon from '@mui/icons-material/School';
 import { getFirestore, collection, addDoc, doc, getDocs, updateDoc, increment } from "firebase/firestore";
 
-
 function Administrator() {
 
   const [classList, setClassList] = useState([]);
