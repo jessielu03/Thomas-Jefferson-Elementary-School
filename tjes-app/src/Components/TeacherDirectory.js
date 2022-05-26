@@ -5,6 +5,9 @@ import {useState, useEffect, useRef} from "react"
 import db from "../database.js"
 import IndivTeacher from "./IndivTeacherComp.js"
 import {Link} from "react-router-dom";
+import Tabs from '@mui/material/Tabs';
+import Tab from '@mui/material/Tab';
+import {headerStyle,container} from './pagescss.js';
 
 // create a form where admin can input all fields to create new student
 function TeacherDirectory(){
@@ -13,15 +16,15 @@ function TeacherDirectory(){
     const Classref = useRef(null);
     const [teachers, setTeachers] = useState([])
 
-    useEffect(() => {
-        const teachers = []
-        getDocs(collection(db, "Teachers"))  
-        .then((allResponses) => {  // format each response into an array as we want it
-          allResponses.forEach((response) => teachers.push({ id: response.id, ...response.data() }))
-          teachers.sort();
-          setTeachers(teachers);
-        })
-      }, [db])
+    // useEffect(() => {
+    //     const teachers = []
+    //     getDocs(collection(db, "Teachers"))  
+    //     .then((allResponses) => {  // format each response into an array as we want it
+    //       allResponses.forEach((response) => teachers.push({ id: response.id, ...response.data() }))
+    //       teachers.sort();
+    //       setTeachers(teachers);
+    //     })
+    //   }, [db])
 
 
     const addTeacher = (e) => {
@@ -62,6 +65,14 @@ function TeacherDirectory(){
       }
 
       return (//put in links above the h1
+        <div style ={container}>
+          <div style={headerStyle}>
+            <h1> Teacher Directory</h1>
+            <Tabs centered>
+                <Tab label="Home" href="/Administrator" />
+                <Tab label="Student Directory" href="./StudentDirectory" />
+            </Tabs>
+            </div>
           <div className="teacherDirectory">
             <center>
               <Link to='/administrator'>Administrators</Link>
@@ -84,6 +95,7 @@ function TeacherDirectory(){
                 updateClass={updateClass}
               />  )}
           </div>
+        </div>
       );
 }
 
