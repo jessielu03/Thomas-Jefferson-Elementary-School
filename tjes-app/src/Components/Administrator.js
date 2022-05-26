@@ -30,7 +30,7 @@ function Administrator() {
     <div style={headerStyle}>
             <h1> Admin Dashboard</h1>
             <Tabs centered>
-                <Tab label="Student Directory" href="StudentDirectory" />
+                <Tab label="Student Directory" href="administrator/StudentDirectory" />
                 <Tab label="Teacher Directory" href="administrator/TeacherDirectory" />
             </Tabs>
             </div>
