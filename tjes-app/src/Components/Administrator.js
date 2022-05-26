@@ -28,7 +28,6 @@ function Administrator() {
       <nav>
           <Link to='/'>Home</Link>
           <h1>Welcome, admin</h1>
-
           
           <Link to='TeacherDirectory'><Button
               variant='outlined'
@@ -42,7 +41,6 @@ function Administrator() {
           <br></br>
           <br></br>
           <Divider></Divider>
-
           {/*temporary link to access class page*/}
           <h3>Class Pages:</h3>
           <Link to='AdminClassPage' state={{ className: "1A", classID: "tempID"}}>
