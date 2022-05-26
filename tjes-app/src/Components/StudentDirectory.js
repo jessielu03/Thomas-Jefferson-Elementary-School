@@ -16,6 +16,7 @@ import Tab from '@mui/material/Tab';
 
 // create a form where admin can input all fields to create new student
 function StudentDirectory(){
+    const [removeStudnet, setRemovedStudents]=useState(0);
     const FirstNameref = useRef(null);
     const LastNameref = useRef(null);
     const GradeLevelref = useRef(null);
@@ -65,42 +66,10 @@ function StudentDirectory(){
         Graderef.current.value=""
     }
 
-    const updateTeacher = (responseID, newTeacher) => {
-      updateDoc(doc(db, "Teacher", responseID), {
-        Teacher: newTeacher
-      })
-      .then((docRef) => {
-        const updatedStudents = [...students]
-        updatedStudents.forEach((student) =>  {
-          console.log(student.id)
-          if (student.id === responseID) {
-            student.Teacher=newTeacher
-          }
-        })
-        setStudents(updatedStudents);
-      })
-      .catch((e) => console.error(e))
-    }
-
-    const updateGrade = (responseID, grade) => {
-      updateDoc(doc(db, "students", responseID), {
-        Grade: grade
-      })
-      .then((docRef) => {
-        const updatedStudents = [...students]
-        updatedStudents.forEach((student) =>  {
-          console.log(student.id)
-          if (student.id === responseID) {
-            student.Grade=grade
-          }
-        })
-        setStudents(updatedStudents);
-      })
-      .catch((e) => console.error(e))
-    }
-
-    const removeStudent =(id) => {
-      deleteDoc(doc(db, "Students", id));
+    const removeStudent = async (id) => {
+      await deleteDoc(doc(db, "Students", id));
+      const inc=removeStudnet+1;
+      setRemovedStudents(inc);
     }
 
       return (//put in links above the h1
@@ -115,12 +84,6 @@ function StudentDirectory(){
 
           <div className="studentDirectory">
             <center>
-            <br></br>
-            <Link to='/administrator'><Button
-              variant='outlined'
-              sx={{ color: 'purple', borderColor: 'purple' }}>
-                <SchoolIcon />Administrators</Button></Link>
-              <h1>Student Directory</h1>
               <h3>Add a Student:</h3>
               <form onSubmit={addStudent}>
                     First Name:<br></br>
@@ -148,7 +111,6 @@ function StudentDirectory(){
                 Class={student.Class}
                 Grade={student.Grade}
                 removeStudent={removeStudent}
-                updateGrade={updateGrade}
               />  )}
               </center>
           </div>
