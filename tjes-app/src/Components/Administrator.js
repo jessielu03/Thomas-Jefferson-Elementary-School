@@ -6,10 +6,12 @@ import { useState } from "react";
 import Button from '@mui/material/Button';
 import Divider from '@mui/material/Divider';
 import SchoolIcon from '@mui/icons-material/School';
+import Tabs from '@mui/material/Tabs';
+import Tab from '@mui/material/Tab';
 import { getFirestore, collection, addDoc, doc, getDocs, updateDoc, increment } from "firebase/firestore";
+import {headerStyle,container} from './pagescss.js';
 
 function Administrator() {
-
   const [classList, setClassList] = useState([]);
 
   useEffect(() => {
@@ -24,6 +26,14 @@ function Administrator() {
   }, [db])
 
   return(
+    <div style={container}>
+    <div style={headerStyle}>
+            <h1> Admin Dashboard</h1>
+            <Tabs centered>
+                <Tab label="Student Directory" href="StudentDirectory" />
+                <Tab label="Teacher Directory" href="administrator/TeacherDirectory" />
+            </Tabs>
+            </div>
       <nav>
           <Link to='/'>Home</Link>
           <h1>Welcome, admin</h1>
@@ -56,6 +66,7 @@ function Administrator() {
             </Link>)
           }
       </nav>
+      </div>
   );
 }
 

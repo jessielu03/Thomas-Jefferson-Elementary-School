@@ -5,7 +5,9 @@ import {useState, useEffect, useRef} from "react"
 import db from "../database.js"
 import IndivStudent from "./indivStudentComp.js"
 import {Link} from "react-router-dom";
-
+import {headerStyle,container} from './pagescss.js';
+import Tabs from '@mui/material/Tabs';
+import Tab from '@mui/material/Tab';
 // create a form where admin can input all fields to create new student
 function StudentDirectory(){
     const FirstNameref = useRef(null);
@@ -87,6 +89,14 @@ function StudentDirectory(){
 
 
       return (//put in links above the h1
+        <div style ={container}>
+          <div style={headerStyle}>
+            <h1> Student Directory</h1>
+            <Tabs centered>
+                <Tab label="Home" href="/Administrator" />
+                <Tab label="Teacher Directory" href="./TeacherDirectory" />
+            </Tabs>
+            </div>
           <div className="studentDirectory">
             <center>
               <Link to='/administrator'>Administrators</Link>
@@ -117,6 +127,7 @@ function StudentDirectory(){
                 updateTeacher={updateTeacher}
                 updateGrade={updateGrade}
               />  )}
+          </div>
           </div>
       );
 }
