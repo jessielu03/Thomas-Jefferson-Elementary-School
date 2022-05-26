@@ -13,7 +13,7 @@ function AdminClassPage(props){
     const location = useLocation();
     const[teacherName, setTeacherName] = useState(location.state?.teacherName);
     const[gradeLevel, setGradeLevel] = useState(location.state?.gradeLevel);
-    const[className, setClassName] = useState(location.state?.className);
+    const[className, setClassName] = useState(location.state?.name);
     const id = location.state?.classID;
     const [thisClass, setClass] = useState([])
     const [classList, setClassList] = useState([]);
