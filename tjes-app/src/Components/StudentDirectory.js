@@ -6,13 +6,16 @@ import db from "../database.js"
 import IndivStudent from "./indivStudentComp.js"
 import {Link} from "react-router-dom";
 import Button from '@mui/material/Button';
-import SchoolIcon from '@mui/icons-material/School';
 import MenuItem from '@mui/material/MenuItem';
 import InputLabel from '@mui/material/InputLabel';
 import Select from '@mui/material/Select';
-import {headerStyle,container} from './pagescss.js';
 import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
+import {headerStyle, container, tabStyle} from './pagescss.js';
+import SchoolIcon from '@mui/icons-material/School';
+import HomeIcon from '@mui/icons-material/Home';
+import EventIcon from '@mui/icons-material/Event';
+import SpeedIcon from '@mui/icons-material/Speed';
 
 // create a form where admin can input all fields to create new student
 function StudentDirectory(){
@@ -75,12 +78,18 @@ function StudentDirectory(){
       return (//put in links above the h1
         <div style ={container}>
           <div style={headerStyle}>
-            <h1> Student Directory</h1>
+            <br></br>
+            <br></br>
+            <h1>STUDENT DIRECTORY</h1>
+            <br></br>
             <Tabs centered>
-                <Tab label="Home" href="/Administrator" />
-                <Tab label="Teacher Directory" href="./TeacherDirectory" />
+                <Tab style={tabStyle} label={<><HomeIcon />Home</>} href="/" />
+                <Tab style={tabStyle} label={<><EventIcon />Calendar</>} href="/" />
+                <Tab style={tabStyle} label={<><SpeedIcon />Admin Dashboard</>} href="/administrator" />
+                <Tab style={tabStyle} label={<><SchoolIcon />Teacher Directory</>} href="./TeacherDirectory" />
             </Tabs>
-            </div>
+            <br></br>
+          </div>
 
           <div className="studentDirectory">
             <center>

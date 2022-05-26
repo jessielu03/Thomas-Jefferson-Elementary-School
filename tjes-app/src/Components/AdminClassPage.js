@@ -7,7 +7,13 @@ import Tab from '@mui/material/Tab';
 import db from '../database';
 import { useLocation } from 'react-router-dom';
 import { updateDoc,doc,getDoc,collection, getDocs, increment } from 'firebase/firestore';
-import {headerStyle,container} from './pagescss.js';
+import {headerStyle, container, tabStyle} from './pagescss.js';
+import SchoolIcon from '@mui/icons-material/School';
+import HomeIcon from '@mui/icons-material/Home';
+import EventIcon from '@mui/icons-material/Event';
+import SpeedIcon from '@mui/icons-material/Speed';
+
+
 function AdminClassPage(props){
     // Props include whatever came from the data base
     const location = useLocation();
@@ -17,7 +23,6 @@ function AdminClassPage(props){
     const id = location.state?.classID;
     const [thisClass, setClass] = useState([])
     const [classList, setClassList] = useState([]);
-    const gradeName = className.charAt(0);
     
     useEffect(() => {
         // const classes = [];
@@ -58,13 +63,20 @@ function AdminClassPage(props){
         <div style ={container}>
             {/* {props.location.state.classN} */}
             <div style={headerStyle}>
-            <h1> Class {className}'s admin page</h1>
-            <Tabs centered>
-                <Tab label="Home" href="/Administrator" />
-                <Tab label="Student Directory" href="./StudentDirectory" />
-                <Tab label="Teacher Directory" href="./TeacherDirectory" />
-            </Tabs>
+                <br></br>
+                <br></br>
+                <h1>CLASS{className}'S CLASS PAGE</h1>
+                <br></br>
+                <Tabs centered>
+                    <Tab style={tabStyle} label={<><HomeIcon />Home</>} href="/" />
+                    <Tab style={tabStyle} label={<><EventIcon />Calendar</>} href="/" />
+                    <Tab style={tabStyle} label={<><SpeedIcon />Admin Dashboard</>} href="/administrator" />
+                    <Tab style={tabStyle} label={<><SchoolIcon />Student Directory</>} href="./StudentDirectory" />
+                    <Tab style={tabStyle} label={<><SchoolIcon />Teacher Directory</>} href="./TeacherDirectory" />
+                </Tabs>
+                <br></br>
             </div>
+
             <div>
             <Grid container spacing={3}>
             <Grid item xs>
