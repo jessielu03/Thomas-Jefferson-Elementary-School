@@ -7,7 +7,9 @@ import IndivTeacher from "./IndivTeacherComp.js"
 import {Link} from "react-router-dom";
 import Button from '@mui/material/Button';
 import SchoolIcon from '@mui/icons-material/School';
-
+import Tabs from '@mui/material/Tabs';
+import Tab from '@mui/material/Tab';
+import {headerStyle,container} from './pagescss.js';
 
 // create a form where admin can input all fields to create new student
 function TeacherDirectory(){
@@ -33,7 +35,6 @@ function TeacherDirectory(){
           setClassList(classes)
       })
       }, [db])
-
 
     const addTeacher = (e) => {
         e.preventDefault(e);
@@ -73,6 +74,14 @@ function TeacherDirectory(){
       }
 
       return (//put in links above the h1
+        <div style ={container}>
+          <div style={headerStyle}>
+            <h1> Teacher Directory</h1>
+            <Tabs centered>
+                <Tab label="Home" href="/Administrator" />
+                <Tab label="Student Directory" href="./StudentDirectory" />
+            </Tabs>
+            </div>
           <div className="teacherDirectory">
             <center>
             <Link to='/administrator'><Button
@@ -103,6 +112,7 @@ function TeacherDirectory(){
               />  )}
               </center>
           </div>
+        </div>
       );
 }
 

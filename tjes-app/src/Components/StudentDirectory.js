@@ -10,6 +10,9 @@ import SchoolIcon from '@mui/icons-material/School';
 import MenuItem from '@mui/material/MenuItem';
 import InputLabel from '@mui/material/InputLabel';
 import Select from '@mui/material/Select';
+import {headerStyle,container} from './pagescss.js';
+import Tabs from '@mui/material/Tabs';
+import Tab from '@mui/material/Tab';
 
 // create a form where admin can input all fields to create new student
 function StudentDirectory(){
@@ -99,7 +102,17 @@ function StudentDirectory(){
     const removeStudent =(id) => {
       deleteDoc(doc(db, "Students", id));
     }
-      return (
+
+      return (//put in links above the h1
+        <div style ={container}>
+          <div style={headerStyle}>
+            <h1> Student Directory</h1>
+            <Tabs centered>
+                <Tab label="Home" href="/Administrator" />
+                <Tab label="Teacher Directory" href="./TeacherDirectory" />
+            </Tabs>
+            </div>
+
           <div className="studentDirectory">
             <center>
             <br></br>
@@ -138,6 +151,7 @@ function StudentDirectory(){
                 updateGrade={updateGrade}
               />  )}
               </center>
+          </div>
           </div>
       );
 }

@@ -5,7 +5,7 @@ import { useState } from "react";
 import db from '../database';
 import {useEffect} from "react";
 import {collection, doc, getDocs, updateDoc, increment } from "firebase/firestore";
-
+import {headerStyle,container} from './pagescss.js';
 
 function Teacher(){
 
@@ -43,6 +43,10 @@ function Teacher(){
 
 
     return(
+        <div style={container}>
+            <div style={headerStyle}>
+                <h1> Teacher Dashboard</h1>
+            </div>
         <nav>
             <Link to='/'>Home</Link>
             {
@@ -58,5 +62,6 @@ function Teacher(){
 
             } 
         </nav>
+        </div>
     );
 }export default Teacher;
