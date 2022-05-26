@@ -102,7 +102,7 @@ function Administrator() {
       <h4>Class Pages:</h4>
     
       {classList.map((c) => 
-        <Link to='AdminClassPage' state={{ className: c.name, classID: c.id }}>
+        <Link to='AdminClassPage' state={{ className: c.name, classID: c.id, gradeLevel:c.grade}}>
           <Button
           variant='outlined'
           sx={{ color: 'purple', borderColor: 'purple' }}>Class {c.name}</Button>
