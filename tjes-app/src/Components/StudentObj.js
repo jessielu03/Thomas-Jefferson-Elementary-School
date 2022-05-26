@@ -26,7 +26,7 @@ function StudentObj(props) {
                         id="demo-simple-select"
                         //value={age}
                         label="Age"
-                        //onChange={() => props.upvote(props.id)} value="Upvote"
+                        //onChange={(event: React.ChangeEvent<HTMLInputElement>) => props.update(props.id)} value=(event.target.value)}
                         type="submit"
                     >
                         <MenuItem value={4}>A</MenuItem>

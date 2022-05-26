@@ -64,8 +64,8 @@ function Administrator() {
         <Tabs centered>
             <Tab style={tabStyle} label={<><HomeIcon />Home</>} href="/" />
             <Tab style={tabStyle} label={<><EventIcon />Calendar</>} href="/" />
-            <Tab style={tabStyle} label={<><SchoolIcon />Student Directory</>} href="/StudentDirectory" />
-            <Tab style={tabStyle} label={<><SchoolIcon />Teacher Directory</>} href="/TeacherDirectory" />
+            <Tab style={tabStyle} label={<><SchoolIcon />Student Directory</>} href="/administrator/StudentDirectory" />
+            <Tab style={tabStyle} label={<><SchoolIcon />Teacher Directory</>} href="/administrator/TeacherDirectory" />
         </Tabs>
         <br></br>
       </div>
