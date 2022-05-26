@@ -17,6 +17,7 @@ function StudentDirectory(){
 
 
     useEffect(() => {
+      console.log("rerendering student directory...");
         const students = []
         getDocs(collection(db, "Students"))  
         .then((allResponses) => {  // format each response into an array as we want it

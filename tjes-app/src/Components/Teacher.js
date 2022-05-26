@@ -12,6 +12,7 @@ function Teacher(){
     const [students, setStudents] = useState([])
   
     useEffect (() => {
+        console.log("rerendering teacher.js...");
       const students = []
       getDocs(collection(db, "Students"))
       .then((allResponses) => {
@@ -19,7 +20,7 @@ function Teacher(){
         students.sort((a, b) => (a.upvotes < b.upvotes) ? 1 : -1)
         setStudents(students)
       })
-    })
+    }, [db])
 
     // upvote feature
     const upvote = (studentID) => {

@@ -4,13 +4,27 @@ import db from '../database.js';
 import {useEffect} from "react";
 import { useState } from "react";
 import Button from '@mui/material/Button';
-import Divider from '@mui/material/Divider';
 import SchoolIcon from '@mui/icons-material/School';
+import HomeIcon from '@mui/icons-material/Home';
+import EventIcon from '@mui/icons-material/Event';
 import { getFirestore, collection, addDoc, doc, getDocs, updateDoc, increment } from "firebase/firestore";
+import Tabs from '@mui/material/Tabs';
+import Tab from '@mui/material/Tab';
+import { common } from '@mui/material/colors';
+import TextField from '@mui/material/TextField';
+import Grid from '@mui/material/Grid';
+import Box from '@mui/material/Box';
+import InputLabel from '@mui/material/InputLabel';
+import MenuItem from '@mui/material/MenuItem';
+import FormControl from '@mui/material/FormControl';
+import Select, { SelectChangeEvent } from '@mui/material/Select';
 
 function Administrator() {
 
   const [classList, setClassList] = useState([]);
+  const [newClass, setNewClass] = useState({});
+  const [newClassName, setNewClassName] = useState("");
+  const [newClassTeacher, setNewClassTeacher] = useState(null);
 
   useEffect(() => {
     console.log("rerendering...");
@@ -23,39 +37,78 @@ function Administrator() {
       })
   }, [db])
 
-  return(
-      <nav>
-          <Link to='/'>Home</Link>
-          <h1>Welcome, admin</h1>
-          
-          <Link to='TeacherDirectory'><Button
-              variant='outlined'
-              sx={{ color: 'purple', borderColor: 'purple' }}>
-                <SchoolIcon />Teacher Directory</Button></Link>
-          
-          <Link to='StudentDirectory'><Button
-              variant='outlined'
-              sx={{ color: 'purple', borderColor: 'purple' }}>
-                <SchoolIcon />Student Directory</Button></Link>
-          <br></br>
-          <br></br>
-          <Divider></Divider>
-          {/*temporary link to access class page*/}
-          <h3>Class Pages:</h3>
-          <Link to='AdminClassPage' state={{ className: "1A", classID: "tempID"}}>
-            <Button
-              variant='outlined'
-              sx={{ color: 'purple', borderColor: 'purple' }}>Class 1A</Button>
-          </Link>
+  const headerStyle = {
+    backgroundColor:"#673AB7",
+    color: common.white,
+    alignItems:"center",
+    justifyContent:'center',
+  }
+  const container ={
+      display:"flex",
+      flexGrow:'1',
+      flexDirection: 'column',
+      textAlign: 'center'
+  }
+  const tabStyle = {
+    color: common.white,
+    textDecoration: 'none'
+  };
 
-          <br></br>
-        
-          {classList.map((c) => 
-            <Link to='AdminClassPage' state={{ className: c.name, classID: c.id }}>
-              <button>Class {c.name}</button>
-            </Link>)
-          }
-      </nav>
+  return(
+    <div style ={container}>
+      <div style={headerStyle}>
+        <br></br>
+        <br></br>
+        <h1>ADMINISTRATOR DASHBOARD</h1>
+        <br></br>
+        <Tabs centered>
+            <Tab style={tabStyle} label={<><HomeIcon />Home</>} href="/" />
+            <Tab style={tabStyle} label={<><EventIcon />Calendar</>} href="/" />
+            <Tab style={tabStyle} label={<><SchoolIcon />Student Directory</>} href="/StudentDirectory" />
+            <Tab style={tabStyle} label={<><SchoolIcon />Teacher Directory</>} href="/TeacherDirectory" />
+        </Tabs>
+        <br></br>
+      </div>
+
+      <br></br>
+      <br></br>
+
+      <Grid container spacing={10}>
+        <Grid item xs>
+            <TextField 
+              id="standard-basic" 
+              variant="standard"
+              helperText = "Class Name"
+              onChange={(e) => setNewClassName(e.target.value)}
+              inputProps={{ defaultValue: null }}
+            />
+        </Grid>
+        <Grid item xs>
+            <TextField 
+              id="standard-basic" 
+              variant="standard"
+              helperText = "Class Name"
+              onChange={(e) => setNewClassTeacher(e.target.value)}
+              inputProps={{ defaultValue: null }}
+            />
+        </Grid>
+        <Grid item xs><Button>Add Class</Button></Grid>
+
+      </Grid>
+      
+      <br></br>
+      <br></br>
+      <br></br>
+      <h4>Class Pages:</h4>
+    
+      {classList.map((c) => 
+        <Link to='AdminClassPage' state={{ className: c.name, classID: c.id }}>
+          <Button
+          variant='outlined'
+          sx={{ color: 'purple', borderColor: 'purple' }}>Class {c.name}</Button>
+        </Link>)
+      }
+    </div>
   );
 }
 
