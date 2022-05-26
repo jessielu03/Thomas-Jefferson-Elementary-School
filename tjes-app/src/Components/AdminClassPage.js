@@ -45,8 +45,8 @@ function AdminClassPage(props){
             <h1> Class {className}'s admin page</h1>
             <Tabs centered>
                 <Tab label="Home" href="/Administrator" />
-                <Tab label="Student Directory" href="/StudentDirectory" />
-                <Tab label="Teacher Directory" href="/TeacherDirectory" />
+                <Tab label="Student Directory" href="./StudentDirectory" />
+                <Tab label="Teacher Directory" href="./TeacherDirectory" />
             </Tabs>
             </div>
             <div>

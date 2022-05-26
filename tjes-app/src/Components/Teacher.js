@@ -19,7 +19,7 @@ function Teacher(){
         students.sort((a, b) => (a.upvotes < b.upvotes) ? 1 : -1)
         setStudents(students)
       })
-    })
+    }, [db])
 
     // upvote feature
     const upvote = (studentID) => {

@@ -5,6 +5,9 @@ import {useState, useEffect, useRef} from "react"
 import db from "../database.js"
 import IndivTeacher from "./IndivTeacherComp.js"
 import {Link} from "react-router-dom";
+import Button from '@mui/material/Button';
+import SchoolIcon from '@mui/icons-material/School';
+
 
 // create a form where admin can input all fields to create new student
 function TeacherDirectory(){
@@ -12,6 +15,7 @@ function TeacherDirectory(){
     const LastNameref = useRef(null);
     const Classref = useRef(null);
     const [teachers, setTeachers] = useState([])
+    const [classList, setClassList] = useState([]);
 
     useEffect(() => {
         const teachers = []
@@ -21,6 +25,13 @@ function TeacherDirectory(){
           teachers.sort();
           setTeachers(teachers);
         })
+        const classes = []
+        getDocs(collection(db, "Classes"))
+        .then((allClasses) => {
+          allClasses.forEach((c) => classes.push({ id: c.id, ...c.data() }))
+          classes.sort()  // TODO
+          setClassList(classes)
+      })
       }, [db])
 
 
@@ -29,10 +40,10 @@ function TeacherDirectory(){
         const newTeacher = {
             FirstName: FirstNameref.current.value,
             LastName: LastNameref.current.value,
-            Class: Classref.current.value
+            Class: "Classes/" + Classref.current.value
         }
 
-        .addDoc(collection(db, "Teachers"), newTeacher)
+        addDoc(collection(db, "Teachers"), newTeacher)
         .then((docRef) => {
             setTeachers([...teachers, {id: docRef.id, ...newTeacher}])
         })
@@ -64,7 +75,10 @@ function TeacherDirectory(){
       return (//put in links above the h1
           <div className="teacherDirectory">
             <center>
-              <Link to='/administrator'>Administrators</Link>
+            <Link to='/administrator'><Button
+              variant='outlined'
+              sx={{ color: 'purple', borderColor: 'purple' }}>
+                <SchoolIcon />Administrators</Button></Link>
               <h1>Teacher Directory</h1>
               <h3>Add a Teacher:</h3>
               <form onSubmit={addTeacher}>
@@ -72,17 +86,22 @@ function TeacherDirectory(){
                     <input type="text" ref={FirstNameref}/><br></br>
                     Last Name:<br></br>
                     <input type="text" ref={LastNameref}/><br></br>
-                    Class: <br></br>
-                    <input type="text" ref={Classref}/><br></br>
+                    <label for="class">Class:</label><br></br>
+                      <select id="cars" name="cars" ref={Classref}>
+                        {classList.map((indivClass) => 
+                        <option value={indivClass.id}>{indivClass.name}
+                        </option> 
+                        )}
+                      </select><br></br>
                     <input type="submit" value="Add Teacher"/>
               </form>
-              </center>
               {teachers.map((teacher)=> <IndivTeacher 
                 FirstName={teacher.FirstName}
                 LastName={teacher.LastName}
                 Class={teacher.Class}
                 updateClass={updateClass}
               />  )}
+              </center>
           </div>
       );
 }
