@@ -17,6 +17,8 @@ import SchoolIcon from '@mui/icons-material/School';
 import HomeIcon from '@mui/icons-material/Home';
 import EventIcon from '@mui/icons-material/Event';
 import SpeedIcon from '@mui/icons-material/Speed';
+import AccountBoxIcon from '@mui/icons-material/AccountBox';
+
 
 function AdminClassPage(props){
     // Props include whatever came from the data base
@@ -26,9 +28,6 @@ function AdminClassPage(props){
     const[firstName, setFirstName] = useState(str[0]);
     const[lastName, setLastName] = useState(str[1]);
     const[className, setClassName] = useState(location.state?.className);
-    const[teacherName, setTeacherName] = useState(location.state?.teacherName);
-    const[gradeLevel, setGradeLevel] = useState(location.state?.gradeLevel);
-    const[className, setClassName] = useState(location.state?.name);
     const id = location.state?.classID;
     const [thisClass, setClass] = useState([])
     const [classList, setClassList] = useState([]);
@@ -43,13 +42,6 @@ function AdminClassPage(props){
           setClass(classes);
         })
       const students = [];
-        // const classes = [];
-        // getDocs(collection(db, "Classes"))
-        // .then((allClasses) => {
-        //   allClasses.forEach((c) => classes.push({ id: c.id, ...c.data() }))
-        //   classes.sort();  // TODO
-        //   setClassList(classes);
-    const students = []
       getDocs(collection(db, "Students"))
       .then((allStudents) => {
         allStudents.forEach((c) => students.push({ id: c.id, ...c.data() }))
@@ -69,9 +61,9 @@ function AdminClassPage(props){
     // Check what the actual fields are called
     const update = (id) =>{
         updateDoc(doc(db, "Classes", id), {
-            teacher: teacherName,
-            name: className,
-            students: classList 
+            FirstName: firstName,
+            LastName: lastName,
+            Class: className 
         })
         .then((doc) => {
             setFirstName(firstName);
@@ -83,7 +75,7 @@ function AdminClassPage(props){
             <div style={headerStyle}>
                 <br></br>
                 <br></br>
-<h1>CLASS {className}'S CLASS PAGE</h1>
+                <h1>CLASS {className}'S CLASS PAGE</h1>
                 <br></br>
                 <Tabs centered>
                     <Tab style={tabStyle} label={<><HomeIcon />Home</>} href="/" />
@@ -110,40 +102,38 @@ function AdminClassPage(props){
             </Card>
             </Box>
             <div style={studentCardStyle}>
-
-            <div>
-            <Grid container spacing={3}>
-              <Grid item xs>
-                  <TextField id="standard-basic" variant="standard"
-                  helperText = "First Name"
-                  onChange={(e) => setFirstName(e.target.value)}
-                  inputProps={{
-                      defaultValue: firstName
-                  }}/>
-              </Grid>
-              <Grid item xs>
-                  <TextField id="standard-basic" variant="standard"
-                  helperText = "Last Name"
-                  inputProps={{
-                      defaultValue: lastName
-                  }}
-                  onChange={(e) => setLastName(e.target.value)}
-                  />
-              </Grid>
+            <Grid item xs>
+                <TextField id="standard-basic" variant="standard"
+                helperText = "First Name"
+                onChange={(e) => setFirstName(e.target.value)}
+                inputProps={{
+                    defaultValue: firstName
+                }}/>
+            </Grid>
+            <Grid item xs>
+                <TextField id="standard-basic" variant="standard"
+                helperText = "Last Name"
+                inputProps={{
+                    defaultValue: lastName
+                }}
+                onChange={(e) => setLastName(e.target.value)}
+                />
+            </Grid>
             </div>
             <div style={studentCardStyle}>
-              <Grid item xs>
-                  <TextField id="standard-basic" variant="standard"
-                  helperText = "Grade Level"
-                  inputProps={{
-                      defaultValue: className
-                  }}
-                  onChange={(e) => setClassName(e.target.value)}
-                  />
-              </Grid>
+            <Grid item xs>
+                <TextField id="standard-basic" variant="standard"
+                helperText = "Grade Level"
+                inputProps={{
+                    defaultValue: className
+                }}
+                onChange={(e) => setClassName(e.target.value)}
+                />
+            </Grid>
             <Button variant="contained" sx={{backgroundColor:'#673AB7'}}onClick = {() => update(id)}
                 >Submit Changes</Button>
             </div>
+            </Grid>
             </div>
             
             <div>
