@@ -1,6 +1,7 @@
 import {useState, useEffect, useRef} from "react"
 import db from "../database.js"
 import { getFirestore, collection, addDoc, doc, getDoc, updateDoc, increment } from "firebase/firestore";
+import { common } from '@mui/material/colors';
 
 function IndivStudent (props) {
     const Teacherref = "Teacher";
@@ -13,9 +14,16 @@ function IndivStudent (props) {
     .catch(err => console.log(err))
     
     */
+
+    const divStyle = {
+        backgroundColor:"#673AB7",
+        color: "#FFFFFF",
+        width: "500px"
+      }
+      
     if(true) { //indivClass!=null
         return (
-            <div className="indivStudent">
+            <div className="indivStudent" style={divStyle}>
                 <h4>{props.FirstName} {props.LastName} | Grade Level: {props.GradeLevel} | Grade: {props.Grade}</h4>
                 <input type="submit" onClick={() => props.removeStudent(props.id)} value="Remove Student" />
             </div>
@@ -36,16 +44,13 @@ function IndivStudent (props) {
                 <input type="text" value={props.Grade} ref={Graderef}/><br></br>
                 <input type="submit" value="Update Grade"/>
             </form>
-
             <p>Grade Level: {props.GradeLevel}</p>
             <p>Teacher: {props.Teacher}</p>
             <p>Class: {props.Class}</p>
             <p>Grade: {props.Grade}</p>
-
                alert(props.Class.name) 
     doc(db, referenceField)
     const studnet 
-
     then call .data
 */
 
