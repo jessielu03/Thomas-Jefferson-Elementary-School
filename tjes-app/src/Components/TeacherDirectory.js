@@ -43,14 +43,24 @@ function TeacherDirectory(){
         getDocs(collection(db, "Teachers"))  
         .then((allResponses) => {  
           allResponses.forEach((response) => teachers.push({ id: response.id, ...response.data() }))
-          teachers.sort();
+          teachers.sort((a, b) => {
+            let fa = a.FirstName.toLowerCase(),
+                fb = b.FirstName.toLowerCase();
+
+            if (fa < fb) {
+                return -1;
+            }
+            if (fa > fb) {
+                return 1;
+            }
+            return 0;
+          });
           setTeachers(teachers);
         })
         const classes = []
         getDocs(collection(db, "Classes"))
         .then((allClasses) => {
           allClasses.forEach((c) => classes.push({ id: c.id, ...c.data() }))
-          classes.sort()  // TODO
           setClassList(classes)
       })
       }, [db])
@@ -60,7 +70,7 @@ function TeacherDirectory(){
         const newTeacher = {
           FirstName: firstName,
           LastName: lastName,
-          Class: "Classes/" + className,
+          Class: className,
         }
 
         addDoc(collection(db, "Teachers"), newTeacher)
@@ -75,6 +85,17 @@ function TeacherDirectory(){
       const inc=removeTeacher+1;
       setRemoveTeacher(inc);
       alert("Teacher Removed - Refresh Page to Show Removed Teacher")
+    }
+
+    const findClass = (teacher) => {
+      console.log(teacher.className)
+      let indivClass="";
+      for(let i=0; i<classList.length; i++) {
+        if(teacher.Class===classList[i].name){
+          indivClass=classList[i].name
+        }
+      }
+      return indivClass;
     }
 
       return (
@@ -130,7 +151,7 @@ function TeacherDirectory(){
                       onChange={(e) => setClassName(e.target.value)}
                   >
                     {classList.map((indivClass) =>
-                      <MenuItem value={indivClass.id}>{indivClass.name}</MenuItem>
+                      <MenuItem value={indivClass.name}>{indivClass.name}</MenuItem>
                     )}
                   </Select>
                 </FormControl>
@@ -160,6 +181,9 @@ function TeacherDirectory(){
                     <CardContent>
                         <Typography gutterBottom variant="h5" component="div">
                         {c.FirstName} {c.LastName}
+                        </Typography>
+                        <Typography variant="body2" color="text.secondary">
+                        Class: {findClass(c)}
                         </Typography>
                     </CardContent>
                     <CardActions>
