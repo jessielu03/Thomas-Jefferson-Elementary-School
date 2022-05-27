@@ -19,7 +19,6 @@ import SpeedIcon from '@mui/icons-material/Speed';
 import Grid from '@mui/material/Grid';
 import TextField from '@mui/material/TextField';
 import FormControl from '@mui/material/FormControl';
-
 import Box from '@mui/material/Box';
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
@@ -37,13 +36,25 @@ function StudentDirectory(){
     const [className, setClassName]=useState("");
     const [students, setStudents] = useState([])
     const [classList, setClassList] = useState([]);
+    const [localClassName, setLocalClassName]=useState("")
 
     useEffect(() => {
         const students = []
         getDocs(collection(db, "Students"))  
         .then((allResponses) => {  // format each response into an array as we want it
           allResponses.forEach((response) => students.push({ id: response.id, ...response.data() }))
-          students.sort((a,b) => a.LastName > b.LastName ? 1: -1)
+          students.sort( (a, b) => {
+            let fa = a.FirstName.toLowerCase(),
+                fb = b.FirstName.toLowerCase();
+
+            if (fa < fb) {
+                return -1;
+            }
+            if (fa > fb) {
+                return 1;
+            }
+            return 0;
+          });
           setStudents(students);
         })
         const classes = []
@@ -56,6 +67,13 @@ function StudentDirectory(){
       }, [db])
 
     const addStudent = (e) => {
+
+        for(let i=0; i<classList.length; i++) {
+          if(className===classList[i].id){
+            setLocalClassName(classList[i].name)
+          }
+        }
+
         e.preventDefault(e);
         const newStudent = {
           FirstName: firstName,
@@ -80,6 +98,15 @@ function StudentDirectory(){
       alert("Student Removed - Refresh Page to Show Removed Student")
     }
 
+    const findClass = (student) => {
+      let indivClass="";
+      for(let i=0; i<classList.length; i++) {
+        if(student.Class.substring(8, student.Class.length)===classList[i].id){
+          indivClass=classList[i].name
+        }
+      }
+      return indivClass;
+    }
       return (
         <div style ={container}>
           <div style={headerStyle}>
@@ -189,6 +216,9 @@ function StudentDirectory(){
                         </Typography>
                         <Typography variant="body2" color="text.secondary">
                         Current Grade: {c.Grade}
+                        </Typography>
+                        <Typography variant="body2" color="text.secondary">
+                        Class: {findClass(c)}
                         </Typography>
                     </CardContent>
                     <CardActions>
