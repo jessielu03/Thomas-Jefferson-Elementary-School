@@ -43,14 +43,14 @@ function TeacherDirectory(){
         getDocs(collection(db, "Teachers"))  
         .then((allResponses) => {  
           allResponses.forEach((response) => teachers.push({ id: response.id, ...response.data() }))
-          teachers.sort();
+          teachers.sort((a,b) => a.LastName > b.LastName ? 1: -1);
           setTeachers(teachers);
         })
         const classes = []
         getDocs(collection(db, "Classes"))
         .then((allClasses) => {
           allClasses.forEach((c) => classes.push({ id: c.id, ...c.data() }))
-          classes.sort()  // TODO
+          classes.sort((a,b) => a.name > b.name ? 1: -1)  // TODO
           setClassList(classes)
       })
       }, [db])

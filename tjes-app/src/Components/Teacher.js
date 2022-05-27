@@ -73,7 +73,7 @@ function Teacher(){
       getDocs(collection(db, "Students"))
       .then((allResponses) => {
         allResponses.forEach((student) => students.push({id: student.id, ...student.data() }))
-        students.sort((a, b) => (a.upvotes < b.upvotes) ? 1 : -1)
+        students.sort((a, b) => (a.LastName > b.LastName) ? 1 : -1)
         setStudents(students)
       })
     }, [db])

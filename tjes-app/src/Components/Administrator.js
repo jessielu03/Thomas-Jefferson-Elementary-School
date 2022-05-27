@@ -38,7 +38,7 @@ function Administrator() {
     getDocs(collection(db, "Teachers"))
     .then((allTeachers) => {
       allTeachers.forEach((t) => teachers.push({ id: t.id, ...t.data() }))
-      teachers.sort()  // TODO
+      teachers.sort((a,b) => a.LastName > b.LastName ? 1: -1)  // TODO
       setTeacherList(teachers)
       console.log(teacherList)
     })
