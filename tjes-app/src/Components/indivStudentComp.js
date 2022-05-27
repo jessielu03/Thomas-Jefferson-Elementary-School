@@ -6,15 +6,6 @@ import { common } from '@mui/material/colors';
 function IndivStudent (props) {
     const Teacherref = "Teacher";
     const Graderef = "Grade";
-    /*
-    let indivClass
-    getDoc(doc(db, props.Class.toString())).then((res )=>
-        indivClass=res.data()
-    )
-    .catch(err => console.log(err))
-    
-    */
-
     const divStyle = {
         backgroundColor:"#673AB7",
         color: "#FFFFFF",
@@ -31,27 +22,4 @@ function IndivStudent (props) {
     }
   
 }
-
-/*
-           <p>Class: {indivClass.name}</p>
-  <form onSubmit={props.updateTeacher(id, Teacherref.current.value)}>
-                Teacher:
-                <input type="text" value={props.Teacher} ref={Teacherref}/><br></br>
-                <input type="submit" value="Update Teacher"/>
-            </form>
-            <form onSubmit={props.updateGrade(id, Graderef.current.value)}>
-                Class:
-                <input type="text" value={props.Grade} ref={Graderef}/><br></br>
-                <input type="submit" value="Update Grade"/>
-            </form>
-            <p>Grade Level: {props.GradeLevel}</p>
-            <p>Teacher: {props.Teacher}</p>
-            <p>Class: {props.Class}</p>
-            <p>Grade: {props.Grade}</p>
-               alert(props.Class.name) 
-    doc(db, referenceField)
-    const studnet 
-    then call .data
-*/
-
 export default IndivStudent;

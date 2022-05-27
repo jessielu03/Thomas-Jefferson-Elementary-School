@@ -11,7 +11,7 @@ import InputLabel from '@mui/material/InputLabel';
 import Select from '@mui/material/Select';
 import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
-import {headerStyle, container, tabStyle} from './pagescss.js';
+import {headerStyle, container, tabStyle, studentCardStyle} from './pagescss.js';
 import SchoolIcon from '@mui/icons-material/School';
 import HomeIcon from '@mui/icons-material/Home';
 import EventIcon from '@mui/icons-material/Event';
@@ -19,6 +19,13 @@ import SpeedIcon from '@mui/icons-material/Speed';
 import Grid from '@mui/material/Grid';
 import TextField from '@mui/material/TextField';
 import FormControl from '@mui/material/FormControl';
+
+import Box from '@mui/material/Box';
+import Card from '@mui/material/Card';
+import CardContent from '@mui/material/CardContent';
+import Typography from '@mui/material/Typography';
+import CardMedia from '@mui/material/CardMedia';
+import CardActions from'@mui/material/CardActions';
 
 // create a form where admin can input all fields to create new student
 function StudentDirectory(){
@@ -43,7 +50,7 @@ function StudentDirectory(){
         getDocs(collection(db, "Classes"))
         .then((allClasses) => {
           allClasses.forEach((c) => classes.push({ id: c.id, ...c.data() }))
-          classes.sort() 
+          classes.sort()  // TODO
           setClassList(classes)
       })
       }, [db])
@@ -70,6 +77,7 @@ function StudentDirectory(){
       await deleteDoc(doc(db, "Students", id));
       const inc=removeStudnet+1;
       setRemovedStudents(inc);
+      alert("Student Removed - Refresh Page to Show Removed Student")
     }
 
       return (
@@ -157,18 +165,46 @@ function StudentDirectory(){
               <Grid item xs><p fullWidth>    </p></Grid>
 
             </Grid>
-              {students.map((student)=> <IndivStudent
-                id={student.id} 
-                FirstName={student.FirstName}
-                LastName={student.LastName}
-                GradeLevel={student.GradeLevel}
-                Class={student.Class}
-                Grade={student.Grade}
-                removeStudent={removeStudent}
-              />  )}
               </center>
           </div>
+
+          <div style = {studentCardStyle}>
+            <Grid container spacing={3}> 
+            {students.map((c) => 
+            <Grid item xs={3}>
+            <Box style = {studentCardStyle}>
+                <Card sx={{ maxWidth: 200}}>
+                    <CardMedia
+                    component="img"
+                    height="140"
+                    alt="student image"
+                    image='https://image.shutterstock.com/image-vector/user-icon-trendy-flat-style-260nw-418179856.jpg'
+                    />
+                    <CardContent>
+                        <Typography gutterBottom variant="h5" component="div">
+                        {c.FirstName} {c.LastName}
+                        </Typography>
+                        <Typography variant="body2" color="text.secondary">
+                        Grade Level: {c.GradeLevel}
+                        </Typography>
+                        <Typography variant="body2" color="text.secondary">
+                        Current Grade: {c.Grade}
+                        </Typography>
+                    </CardContent>
+                    <CardActions>
+                      <Button size="small" color="primary" type="submit" onClick={() => (removeStudent(c.id))}>
+                        Remove Student
+                      </Button>
+                    </CardActions>
+                </Card>
+                </Box>
+              </Grid>
+            )}
+            {/* {thisClass.map((c) => <h3>{c.FirstName}</h3>)} */}
+            </Grid>
           </div>
+        </div>
+
       );
 }
 
