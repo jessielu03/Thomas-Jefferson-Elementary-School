@@ -32,6 +32,7 @@ import TableRow from '@mui/material/TableRow';
 import { deepPurple } from '@mui/material/colors';
 import { common } from "@material-ui/core/colors";
 import HomeIcon from '@mui/icons-material/Home';
+import CalendarComp from "./Calendar.js";
 //import Title from './Title';
 
 const drawerWidth = 240;
@@ -105,7 +106,7 @@ function Teacher(){
             <CssBaseline />
             <AppBar position="absolute">
               <Toolbar>
-                <IconButton color="inherit" href="/">
+                <IconButton color="inherit" href="/" size="small">
                     <><HomeIcon />Home</>
                 </IconButton>  
                 <Typography
@@ -114,6 +115,7 @@ function Teacher(){
                   color="inherit"
                   noWrap
                   sx={{ flexGrow: 1 }}
+                  
                 >
                 <h3>
                   Teacher Dashboard
@@ -174,18 +176,33 @@ function Teacher(){
                         p: 2,
                         display: 'flex',
                         flexDirection: 'column',
-                        height: 240,
+                        height: 140,
                       }}
                     >
                           <React.Fragment>
-      <Typography component="h2" variant="h6" color="primary" gutterBottom> Class Average </Typography>
-      <Typography component="p" variant="h4">
-        A-
-      </Typography>
-      <Typography color="text.secondary" sx={{ flex: 1 }}>
-        as of 26 May, 2022
-      </Typography>
-    </React.Fragment>
+                            <Typography component="h2" variant="h6" color="primary" gutterBottom> Class Average </Typography>
+                            <Typography component="p" variant="h4">
+                                A-
+                            </Typography>
+                            <Typography color="text.secondary" sx={{ flex: 1 }}>
+                                as of 26 May, 2022
+                            </Typography>
+                            </React.Fragment>
+                    </Paper>
+                    
+                    <br></br>
+                    {/* Calendar */}
+                    <Paper
+                        sx={{
+                        p: 2,
+                        display: 'flex',
+                        flexDirection: 'column',
+                        }}
+                    >
+                            <React.Fragment>
+                    <Typography component="h2" variant="h6" color="primary" gutterBottom> Calendar </Typography>
+                    <CalendarComp/>
+                    </React.Fragment>
                     </Paper>
                   </Grid>
                 </Grid>
