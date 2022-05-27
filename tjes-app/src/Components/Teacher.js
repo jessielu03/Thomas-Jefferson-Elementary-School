@@ -64,11 +64,7 @@ function Teacher(){
 
     const [students, setStudents] = useState([])
 
-    const [open, setOpen] = React.useState(true);
-    const toggleDrawer = () => {
-      setOpen(!open);
-    };
-  
+
     useEffect (() => {
       const students = []
       getDocs(collection(db, "Students"))
@@ -78,13 +74,14 @@ function Teacher(){
         setStudents(students)
       })
     }, [db])
-
+/*
     // upvote feature
-    const update = (studentID, gradeChange) => {
+    const updateGrade = (studentID, gradeChange) => {
         updateDoc(doc(db, "Students", studentID, gradeChange), {
             Grade: gradeChange  
         })
         .then((docRef) => {
+        console.log("Updated Grade: ", gradeChange)
         // update the state variable
         const updatedStudents = [...students]
         updatedStudents.forEach((student) =>  {
@@ -97,7 +94,7 @@ function Teacher(){
         })
         .catch((e) => console.error(e))
     } 
-
+*/
 
     return(
       
@@ -137,20 +134,37 @@ function Teacher(){
               <Toolbar />
               <Container maxWidth="lg" sx={{ mt: 4, mb: 4 }}>
                 <Grid container spacing={3}>
-                  {/* Chart */}
+                  {/* Student */}
                   <Grid item xs={12} md={8} lg={9}>
-                    <Paper
-                      sx={{
-                        p: 2,
-                        display: 'flex',
-                        flexDirection: 'column',
-                        height: 240,
-                      }}
-                    >
-                      Event calender, or some other widget, should go here
+                    <Paper sx={{ p: 2, display: 'flex', flexDirection: 'column' }}>
+                    <React.Fragment>
+      <Typography component="h2" variant="h6" color="primary" gutterBottom>Students </Typography>
+      <Table size="small">
+      
+        <TableHead>
+          <TableRow>
+            <TableCell>First</TableCell>
+            <Divider />
+            <TableCell>Last</TableCell>
+            <Divider />
+            <TableCell>Class</TableCell>
+            <Divider />
+            <TableCell>Current Grade</TableCell>
+            <Divider />
+            <TableCell align="right">Change Grade</TableCell>
+          </TableRow>
+        </TableHead>
+      
+        <TableBody sx={{ minWidth: 650 }} size="small" aria-label="a dense table">
+          {students.map((row) => (
+            <StudentObj key={row.id} id={row.id} studentFirst={row.FirstName} studentLast={row.LastName} studentClass={row.Class} gradeLetter={row.Grade} />
+          ))}
+        </TableBody>
+      </Table>
+    </React.Fragment>
                     </Paper>
                   </Grid>
-                  {/* Recent Deposits */}
+                  {/* Grade Average */}
                   <Grid item xs={12} md={4} lg={3}>
                     <Paper
                       sx={{
@@ -168,30 +182,6 @@ function Teacher(){
       <Typography color="text.secondary" sx={{ flex: 1 }}>
         as of 26 May, 2022
       </Typography>
-    </React.Fragment>
-                    </Paper>
-                  </Grid>
-                  {/* Recent Orders */}
-                  <Grid item xs='auto'>
-                    <Paper sx={{ p: 2, display: 'flex', flexDirection: 'column' }}>
-                    <React.Fragment>
-      <Typography component="h2" variant="h6" color="primary" gutterBottom>Students </Typography>
-      <Table size="small">
-        <TableHead>
-          <TableRow>
-            <TableCell>First</TableCell>
-            <TableCell>Last</TableCell>
-            <TableCell>Class</TableCell>
-            <TableCell>Current Grade</TableCell>
-            <TableCell align="right">Change Grade</TableCell>
-          </TableRow>
-        </TableHead>
-        <TableBody>
-          {students.map((row) => (
-            <StudentObj key={row.id} id={row.id} studentFirst={row.FirstName} studentLast={row.LastName} studentClass={row.Class} gradeLetter={row.Grade} />
-          ))}
-        </TableBody>
-      </Table>
     </React.Fragment>
                     </Paper>
                   </Grid>
