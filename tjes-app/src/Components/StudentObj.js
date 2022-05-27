@@ -61,7 +61,7 @@ export default function StudentObj(props) {
             <Divider />
             <TableCell>{props.studentLast}</TableCell>
             <Divider />
-            <TableCell>{props.studentClass}</TableCell>
+            <TableCell>{props.studentGradeLevel}</TableCell>
             <Divider />
             <TableCell>{props.gradeLetter}</TableCell>
             <Divider />

@@ -152,7 +152,7 @@ function Teacher(){
             <Divider />
             <TableCell>Last</TableCell>
             <Divider />
-            <TableCell>Class</TableCell>
+            <TableCell>Grade Level</TableCell>
             <Divider />
             <TableCell>Current Grade</TableCell>
             <Divider />
@@ -162,7 +162,7 @@ function Teacher(){
       
         <TableBody sx={{ minWidth: 650 }} size="small" aria-label="a dense table">
           {students.map((row) => (
-            <StudentObj key={row.id} id={row.id} studentFirst={row.FirstName} studentLast={row.LastName} studentClass={row.Class} gradeLetter={row.Grade} />
+            <StudentObj key={row.id} id={row.id} studentFirst={row.FirstName} studentLast={row.LastName} studentGradeLevel={row.GradeLevel} gradeLetter={row.Grade} />
           ))}
         </TableBody>
       </Table>
@@ -182,7 +182,7 @@ function Teacher(){
                           <React.Fragment>
                             <Typography component="h2" variant="h6" color="primary" gutterBottom> Class Average </Typography>
                             <Typography component="p" variant="h4">
-                                A-
+                                B+
                             </Typography>
                             <Typography color="text.secondary" sx={{ flex: 1 }}>
                                 as of 26 May, 2022
