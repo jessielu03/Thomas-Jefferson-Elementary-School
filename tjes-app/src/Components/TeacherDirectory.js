@@ -13,33 +13,28 @@ import SchoolIcon from '@mui/icons-material/School';
 import HomeIcon from '@mui/icons-material/Home';
 import EventIcon from '@mui/icons-material/Event';
 import SpeedIcon from '@mui/icons-material/Speed';
-
-
-import Grid from "@material-ui/core/Grid";
-import TextField from "@material-ui/core/TextField";
-import FormControlLabel from "@material-ui/core/FormControlLabel";
-import FormControl from "@material-ui/core/FormControl";
-import FormLabel from "@material-ui/core/FormLabel";
-import RadioGroup from "@material-ui/core/RadioGroup";
-import Radio from "@material-ui/core/Radio";
-import Select from "@material-ui/core/Select";
-import MenuItem from "@material-ui/core/MenuItem";
+import Grid from '@mui/material/Grid';
+import TextField from '@mui/material/TextField';
+import FormControl from '@mui/material/FormControl';
+import MenuItem from '@mui/material/MenuItem';
+import InputLabel from '@mui/material/InputLabel';
+import Select from '@mui/material/Select';
 
 
 
 // create a form where admin can input all fields to create new student
 function TeacherDirectory(){
     const [removeTeacher, setRemoveTeacher]=useState(0);
-    const FirstNameref = useRef(null);
-    const LastNameref = useRef(null);
-    const Classref = useRef(null);
+    const [firstName, setFirstName]=useState("");
+    const [lastName, setLastName]=useState("");
+    const [className, setClassName]=useState("");
     const [teachers, setTeachers] = useState([])
     const [classList, setClassList] = useState([]);
 
     useEffect(() => {
         const teachers = []
         getDocs(collection(db, "Teachers"))  
-        .then((allResponses) => {  // format each response into an array as we want it
+        .then((allResponses) => {  
           allResponses.forEach((response) => teachers.push({ id: response.id, ...response.data() }))
           teachers.sort();
           setTeachers(teachers);
@@ -56,9 +51,9 @@ function TeacherDirectory(){
     const addTeacher = (e) => {
         e.preventDefault(e);
         const newTeacher = {
-            FirstName: FirstNameref.current.value,
-            LastName: LastNameref.current.value,
-            Class: "Classes/" + Classref.current.value
+          FirstName: firstName,
+          LastName: lastName,
+          Class: "Classes/" + className,
         }
 
         addDoc(collection(db, "Teachers"), newTeacher)
@@ -66,21 +61,17 @@ function TeacherDirectory(){
             setTeachers([...teachers, {id: docRef.id, ...newTeacher}])
         })
         .catch((e) => console.error(e))
-
-        FirstNameref.current.value=""
-        LastNameref.current.value=""
-        Classref.current.value=""
     }
 
     const removeSingleTeacher = async (id) => {
       await deleteDoc(doc(db, "Teachers", id));
       const inc=removeTeacher+1;
       console.log(inc)
-      await setRemoveTeacher(inc);
+      setRemoveTeacher(inc);
       console.log(removeTeacher)
     }
 
-      return (//put in links above the h1
+      return (
         <div style ={container}>
           <div style={headerStyle}>
             <br></br>
@@ -97,23 +88,55 @@ function TeacherDirectory(){
           </div>
           <div className="teacherDirectory">
             <center>
-              <h3>Add a Teacher:</h3>
-              <form onSubmit={addTeacher} class=".mui-textfeild">
-                    First Name:<br></br>
-                    <div>
-                      <input type="text" ref={FirstNameref} class="mui-textfeild"/><br></br>
-                    </div>
-                    Last Name:<br></br>
-                    <input type="text" ref={LastNameref}/><br></br>
-                    <label for="class">Class:</label><br></br>
-                      <select id="cars" name="cars" ref={Classref}>
-                        {classList.map((indivClass) => 
-                        <option value={indivClass.id}>{indivClass.name}
-                        </option> 
-                        )}
-                      </select><br></br>
-                    <Button type="submit" value="Add Teacher" class="mui-btn mui-btn--raised">Add Teacher</Button>
-              </form>
+            <br></br>
+            <Grid container spacing={5}>
+              <Grid item xs><p fullWidth>    </p></Grid>
+              <Grid item xs><p fullWidth>    </p></Grid>
+              <Grid item xs><p fullWidth>    </p></Grid>
+              <Grid item xs><p fullWidth><b>Add a Teacher: </b></p></Grid>
+              <Grid item xs>
+                  <TextField fullWidth
+                    id="standard-basic" 
+                    variant="standard"
+                    helperText = "First Name"
+                    onChange={(e) => setFirstName(e.target.value)}
+                    inputProps={{ defaultValue: null }}
+                  />
+              </Grid>
+              <Grid item xs>
+                  <TextField fullWidth
+                    id="standard-basic" 
+                    variant="standard"
+                    helperText = "Last Name"
+                    onChange={(e) => setLastName(e.target.value)}
+                    inputProps={{ defaultValue: null }}
+                  />
+              </Grid>
+              
+              <Grid item xs>
+                <FormControl fullWidth>
+                  <InputLabel id="demo-simple-select-label">Class</InputLabel>
+                  <Select
+                      labelId="demo-simple-select-label"
+                      id="demo-simple-select"
+                      label="Class"
+                      type="submit"
+                      onChange={(e) => setClassName(e.target.value)}
+                  >
+                    {classList.map((indivClass) =>
+                      <MenuItem value={indivClass.id}>{indivClass.name}</MenuItem>
+                    )}
+                  </Select>
+                </FormControl>
+              </Grid>
+              <Grid item xs><Button onClick={addTeacher}
+                sx={{ color: 'white', backgroundColor: '#673AB7' }}
+                >Add Teacher</Button></Grid>
+              <Grid item xs><p fullWidth>    </p></Grid>
+              <Grid item xs><p fullWidth>    </p></Grid>
+              <Grid item xs><p fullWidth>    </p></Grid>
+
+            </Grid>
               {teachers.map((teacher)=> <IndivTeacher 
                 FirstName={teacher.FirstName}
                 LastName={teacher.LastName}
@@ -123,7 +146,7 @@ function TeacherDirectory(){
               />   )}
               </center>
           </div>
-        </div>
+          </div>
       );
 }
 
