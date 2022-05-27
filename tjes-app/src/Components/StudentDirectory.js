@@ -16,15 +16,18 @@ import SchoolIcon from '@mui/icons-material/School';
 import HomeIcon from '@mui/icons-material/Home';
 import EventIcon from '@mui/icons-material/Event';
 import SpeedIcon from '@mui/icons-material/Speed';
+import Grid from '@mui/material/Grid';
+import TextField from '@mui/material/TextField';
+import FormControl from '@mui/material/FormControl';
 
 // create a form where admin can input all fields to create new student
 function StudentDirectory(){
     const [removeStudnet, setRemovedStudents]=useState(0);
-    const FirstNameref = useRef(null);
-    const LastNameref = useRef(null);
-    const GradeLevelref = useRef(null);
-    const Graderef = useRef(null);
-    const Classref = useRef(null);
+    const [firstName, setFirstName] = useState("");
+    const [lastName, setLastName] = useState("");
+    const [gradeLevel, setGradeLevel] = useState("");
+    const [grade, setGrade] = useState("");
+    const [className, setClassName]=useState("");
     const [students, setStudents] = useState([])
     const [classList, setClassList] = useState([]);
 
@@ -40,33 +43,27 @@ function StudentDirectory(){
         getDocs(collection(db, "Classes"))
         .then((allClasses) => {
           allClasses.forEach((c) => classes.push({ id: c.id, ...c.data() }))
-          classes.sort()  // TODO
+          classes.sort() 
           setClassList(classes)
       })
       }, [db])
 
     const addStudent = (e) => {
         e.preventDefault(e);
-
         const newStudent = {
-            FirstName: FirstNameref.current.value,
-            LastName: LastNameref.current.value,
-            GradeLevel: GradeLevelref.current.value,
-            Class: "Classes/" + Classref.current.value,
-            Grade: "Not Yet Assigned",
-            Teacher: "NEED TO FIND"
-        }
+          FirstName: firstName,
+          LastName: lastName,
+          GradeLevel: gradeLevel,
+          Class: "Classes/" + className,
+          Grade: grade,
+          Teacher: "NEED TO FIND"
+      }
 
         addDoc(collection(db, "Students"), newStudent)
         .then((docRef) => {
             setStudents([...students, {id: docRef.id, ...newStudent}])
         })
         .catch((e) => console.error(e))
-
-        FirstNameref.current.value=""
-        LastNameref.current.value=""
-        GradeLevelref.current.value=""
-        Graderef.current.value=""
     }
 
     const removeStudent = async (id) => {
@@ -75,7 +72,7 @@ function StudentDirectory(){
       setRemovedStudents(inc);
     }
 
-      return (//put in links above the h1
+      return (
         <div style ={container}>
           <div style={headerStyle}>
             <br></br>
@@ -89,29 +86,77 @@ function StudentDirectory(){
                 <Tab style={tabStyle} label={<><SchoolIcon />Teacher Directory</>} href="./TeacherDirectory" />
             </Tabs>
             <br></br>
+            <br></br>
           </div>
-
           <div className="studentDirectory">
             <center>
-              <h3>Add a Student:</h3>
-              <form onSubmit={addStudent}>
-                    First Name:<br></br>
-                    <input type="text" ref={FirstNameref}/><br></br>
-                    Last Name:<br></br>
-                    <input type="text" ref={LastNameref}/><br></br>
-                    Grade Level (enter a number):<br></br>
-                    <input type="text" ref={GradeLevelref}/><br></br>
-                    Grade: <br></br>
-                    <input type="text" ref={Graderef}/><br></br>
-                    <label for="class">Class:</label><br></br>
-                      <select id="cars" name="cars" ref={Classref}>
-                        {classList.map((indivClass) => 
-                        <option value={indivClass.id}>{indivClass.name}
-                        </option> 
-                        )}
-                      </select><br></br>
-              <input type="submit" text="Add Student"/>
-              </form>
+            <br></br>
+            <Grid container spacing={5}>
+              <Grid item xs><p fullWidth>    </p></Grid>
+              <Grid item xs><p fullWidth>    </p></Grid>
+              <Grid item xs><p fullWidth>    </p></Grid>
+              <Grid item xs><p fullWidth><b>Add a Student: </b></p></Grid>
+              <Grid item xs>
+                  <TextField fullWidth
+                    id="standard-basic" 
+                    variant="standard"
+                    helperText = "First Name"
+                    onChange={(e) => setFirstName(e.target.value)}
+                    inputProps={{ defaultValue: null }}
+                  />
+              </Grid>
+              <Grid item xs>
+                  <TextField fullWidth
+                    id="standard-basic" 
+                    variant="standard"
+                    helperText = "Last Name"
+                    onChange={(e) => setLastName(e.target.value)}
+                    inputProps={{ defaultValue: null }}
+                  />
+              </Grid>
+              <Grid item xs>
+                  <TextField fullWidth
+                    id="standard-basic" 
+                    variant="standard"
+                    helperText = "Grade Level"
+                    onChange={(e) => setGradeLevel(e.target.value)}
+                    inputProps={{ defaultValue: null }}
+                  />
+              </Grid>
+              <Grid item xs>
+                  <TextField fullWidth
+                    id="standard-basic" 
+                    variant="standard"
+                    helperText = "Grade"
+                    onChange={(e) => setGrade(e.target.value)}
+                    inputProps={{ defaultValue: null }}
+                  />
+              </Grid>
+
+              <Grid item xs>
+                <FormControl fullWidth>
+                  <InputLabel id="demo-simple-select-label">Class</InputLabel>
+                  <Select
+                      labelId="demo-simple-select-label"
+                      id="demo-simple-select"
+                      label="Class"
+                      type="submit"
+                      onChange={(e) => setClassName(e.target.value)}
+                  >
+                    {classList.map((indivClass) =>
+                      <MenuItem value={indivClass.id}>{indivClass.name}</MenuItem>
+                    )}
+                  </Select>
+                </FormControl>
+              </Grid>
+              <Grid item xs><Button onClick={addStudent}
+                sx={{ color: 'white', backgroundColor: '#673AB7' }}
+                >Add Student</Button></Grid>
+              <Grid item xs><p fullWidth>    </p></Grid>
+              <Grid item xs><p fullWidth>    </p></Grid>
+              <Grid item xs><p fullWidth>    </p></Grid>
+
+            </Grid>
               {students.map((student)=> <IndivStudent
                 id={student.id} 
                 FirstName={student.FirstName}
@@ -128,19 +173,3 @@ function StudentDirectory(){
 }
 
 export default StudentDirectory;
-
-
-/*
-<InputLabel id="demo-simple-select-label" ref={Classref}>Class</InputLabel>
-                      <Select
-                        labelId="demo-simple-select-label"
-                        id="demo-simple-select"
-                        value="Classes"
-                        label="Class"
-                      >
-                      {classList.map((indivClass) => 
-                        <MenuItem value={indivClass.id}>{indivClass.name}
-                        </MenuItem> 
-                      )}
-                      </Select> <br></br><br></br>
-*/
