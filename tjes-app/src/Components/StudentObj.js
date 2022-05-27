@@ -7,10 +7,15 @@ import FormControl from '@mui/material/FormControl';
 import InputLabel from '@mui/material/InputLabel';
 import Select from '@mui/material/Select';
 import MenuItem from '@mui/material/MenuItem';
+import React, { useState } from 'react'
 //import Title from './Title';
 //import Typography from '@mui/material/Typography';
 
 function StudentObj(props) {
+    //const [grade, setGrade] = useState('')
+    //const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    //    setGrade(event.target.value as string)
+    //}
     return (
         <div>
         <TableRow key={props.id}>
@@ -20,13 +25,12 @@ function StudentObj(props) {
             <TableCell>{props.gradeLetter}</TableCell>
             <TableCell align="right">
                 <FormControl fullWidth>
-                    <InputLabel id="demo-simple-select-label">Age</InputLabel>
                     <Select
                         labelId="demo-simple-select-label"
                         id="demo-simple-select"
-                        //value={age}
-                        label="Age"
-                        //onChange={() => props.upvote(props.id)} value="Upvote"
+                        //value={grade}
+                        label="Grade"
+                        //onChange={handleChange}
                         type="submit"
                     >
                         <MenuItem value={4}>A</MenuItem>
