@@ -61,6 +61,7 @@ function StudentDirectory(){
         getDocs(collection(db, "Classes"))
         .then((allClasses) => {
           allClasses.forEach((c) => classes.push({ id: c.id, ...c.data() }))
+          classes.sort((a,b) => a.name > b.name ? 1: -1)  // TODO
           setClassList(classes)
       })
       }, [db])
@@ -115,7 +116,7 @@ function StudentDirectory(){
             <br></br>
             <Tabs centered>
                 <Tab style={tabStyle} label={<><HomeIcon />Home</>} href="/" />
-                <Tab style={tabStyle} label={<><EventIcon />Calendar</>} href="/" />
+                <Tab style={tabStyle} label={<><EventIcon />Calendar</>} href="/calendar" />
                 <Tab style={tabStyle} label={<><SpeedIcon />Admin Dashboard</>} href="/administrator" />
                 <Tab style={tabStyle} label={<><SchoolIcon />Teacher Directory</>} href="./TeacherDirectory" />
             </Tabs>

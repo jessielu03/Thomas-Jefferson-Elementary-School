@@ -61,9 +61,8 @@ function AdminClassPage(props){
     // Check what the actual fields are called
     const update = (id) =>{
         updateDoc(doc(db, "Classes", id), {
-            FirstName: firstName,
-            LastName: lastName,
-            Class: className 
+            Class: className,
+            teacher: firstName + ' '+ lastName
         })
         .then((doc) => {
             setFirstName(firstName);
@@ -79,7 +78,7 @@ function AdminClassPage(props){
                 <br></br>
                 <Tabs centered>
                     <Tab style={tabStyle} label={<><HomeIcon />Home</>} href="/" />
-                    <Tab style={tabStyle} label={<><EventIcon />Calendar</>} href="/" />
+                    <Tab style={tabStyle} label={<><EventIcon />Calendar</>} href="/calendar" />
                     <Tab style={tabStyle} label={<><SpeedIcon />Admin Dashboard</>} href="/administrator" />
                     <Tab style={tabStyle} label={<><SchoolIcon />Student Directory</>} href="./StudentDirectory" />
                     <Tab style={tabStyle} label={<><SchoolIcon />Teacher Directory</>} href="./TeacherDirectory" />
@@ -88,6 +87,7 @@ function AdminClassPage(props){
             </div>
             <div>
                 <br></br> 
+                <Card style = {studentCardStyle}>
             <h2>Teacher Information</h2>
                 <br></br>
             <Grid container spacing={3} style={studentCardStyle}>
@@ -134,8 +134,10 @@ function AdminClassPage(props){
                 >Submit Changes</Button>
             </div>
             </Grid>
+            </Card>
             </div>
             
+            <Card style = {studentCardStyle}>
             <div>
                 <h2>Class Roster</h2>
             </div>
@@ -166,6 +168,7 @@ function AdminClassPage(props){
             </Grid>     
             {/* {thisClass.map((c) => <h3>{c.FirstName}</h3>)} */}
             </div>
+            </Card>
         </div>
     );
 
