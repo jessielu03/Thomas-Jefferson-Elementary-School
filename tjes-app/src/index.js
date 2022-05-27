@@ -9,6 +9,7 @@ import Teacher from './Components/Teacher';
 import StudentDirectory from './Components/StudentDirectory';
 import TeacherDirectory from './Components/TeacherDirectory';
 import AdminClassPage from './Components/AdminClassPage';
+import CalendarPage from './Components/CalendarPage';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
@@ -17,6 +18,7 @@ root.render(
       <Route path='/' element = {<App/>}/>
       <Route path = 'teacher' element={<Teacher/>}/>
       <Route path = 'administrator' element={<Administrator/>}/>
+      <Route path = 'calendar' element={<CalendarPage/>}/>
       <Route path='administrator/AdminClassPage' element={<AdminClassPage/>}/>
       <Route path='administrator/StudentDirectory' element={<StudentDirectory/>}/>
       <Route path='administrator/TeacherDirectory' element={<TeacherDirectory/>}/>
