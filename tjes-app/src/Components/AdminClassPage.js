@@ -7,24 +7,48 @@ import Tab from '@mui/material/Tab';
 import db from '../database';
 import { useLocation } from 'react-router-dom';
 import { updateDoc,doc,getDoc,collection, getDocs, increment } from 'firebase/firestore';
-import {headerStyle,container} from './pagescss.js';
+import {headerStyle, container, tabStyle} from './pagescss.js';
+import SchoolIcon from '@mui/icons-material/School';
+import HomeIcon from '@mui/icons-material/Home';
+import EventIcon from '@mui/icons-material/Event';
+import SpeedIcon from '@mui/icons-material/Speed';
+
+
 function AdminClassPage(props){
     // Props include whatever came from the data base
     const location = useLocation();
     const[teacherName, setTeacherName] = useState(location.state?.teacherName);
     const[gradeLevel, setGradeLevel] = useState(location.state?.gradeLevel);
-    const[className, setClassName] = useState(location.state?.className);
+    const[className, setClassName] = useState(location.state?.name);
     const id = location.state?.classID;
     const [thisClass, setClass] = useState([])
     const [classList, setClassList] = useState([]);
-
+    //const gradeName = className.charAt(0);
+    
     useEffect(() => {
-        // getDoc(doc(collection(db, "Classes",id)))
-        // .then((doc) => {
-        // thisClass.push({ id: doc.id, ...doc.data()})
-        //   setClass(doc.data());
-        // })
-    }, [])   
+        // const classes = [];
+        // getDocs(collection(db, "Classes"))
+        // .then((allClasses) => {
+        //   allClasses.forEach((c) => classes.push({ id: c.id, ...c.data() }))
+        //   classes.sort();  // TODO
+        //   setClassList(classes);
+    const students = []
+      getDocs(collection(db, "Students"))
+      .then((allStudents) => {
+        allStudents.forEach((c) => students.push({ id: c.id, ...c.data() }))
+        students.sort()
+        // setClassList(students);
+        students.forEach((s) =>{
+            if(s.GradeLevel === gradeLevel)
+            classList.push(s);
+        })
+        // // setClassList((a) => (a.Class === id) ? classList.push(a):console.log("not a part of this class"))
+        setClassList(classList);
+      })
+    //   getDoc(c.teacher)
+    //   .then((doc) => thisClass.push(doc.data())))
+  }, [db])
+
     // Check what the actual fields are called
     const update = (id) =>{
         updateDoc(doc(db, "Classes", id), {
@@ -40,19 +64,21 @@ function AdminClassPage(props){
         <div style ={container}>
             {/* {props.location.state.classN} */}
             <div style={headerStyle}>
-            <h1> Class {className}'s admin page</h1>
-            <Tabs centered>
-                <Tab label="Home" href="/Administrator" />
-                <Tab label="Student Directory" href="./StudentDirectory" />
-                <Tab label="Teacher Directory" href="./TeacherDirectory" />
-            </Tabs>
+                <br></br>
+                <br></br>
+                <h1>CLASS{className}'S CLASS PAGE</h1>
+                <br></br>
+                <Tabs centered>
+                    <Tab style={tabStyle} label={<><HomeIcon />Home</>} href="/" />
+                    <Tab style={tabStyle} label={<><EventIcon />Calendar</>} href="/" />
+                    <Tab style={tabStyle} label={<><SpeedIcon />Admin Dashboard</>} href="/administrator" />
+                    <Tab style={tabStyle} label={<><SchoolIcon />Student Directory</>} href="./StudentDirectory" />
+                    <Tab style={tabStyle} label={<><SchoolIcon />Teacher Directory</>} href="./TeacherDirectory" />
+                </Tabs>
+                <br></br>
             </div>
+
             <div>
-
-            {/* {classList.map((c) =>  */}
-            {/* <h3>{thisClass.grade}</h3> */}
-            {/* )} */}
-
             <Grid container spacing={3}>
             <Grid item xs>
                 <TextField id="standard-basic" variant="standard"
@@ -86,8 +112,6 @@ function AdminClassPage(props){
                 Class: {className}
             </div>
             {id}
-            {/* <h5>Edit Profile Button</h5> */}
-            {/* <body> -> which turns the fields into textfields that you can input into?</body> */}
             <div> 
                 {/* Button to change info in firebase */}
                 <Button onClick = {() => update(id)}
@@ -95,9 +119,8 @@ function AdminClassPage(props){
             </div>
             <div>
                 <h2>Class Roster</h2>
-                {/* {classes.map((Student) => <h3>{Student.FirstName}</h3>)} */}
-                {/* {thisClass.grade} */}
             </div>
+            {classList.map((c) => <h3>{c.FirstName}</h3>)}
         </div>
     );
 

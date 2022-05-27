@@ -6,16 +6,20 @@ import db from "../database.js"
 import IndivStudent from "./indivStudentComp.js"
 import {Link} from "react-router-dom";
 import Button from '@mui/material/Button';
-import SchoolIcon from '@mui/icons-material/School';
 import MenuItem from '@mui/material/MenuItem';
 import InputLabel from '@mui/material/InputLabel';
 import Select from '@mui/material/Select';
-import {headerStyle,container} from './pagescss.js';
 import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
+import {headerStyle, container, tabStyle} from './pagescss.js';
+import SchoolIcon from '@mui/icons-material/School';
+import HomeIcon from '@mui/icons-material/Home';
+import EventIcon from '@mui/icons-material/Event';
+import SpeedIcon from '@mui/icons-material/Speed';
 
 // create a form where admin can input all fields to create new student
 function StudentDirectory(){
+    const [removeStudnet, setRemovedStudents]=useState(0);
     const FirstNameref = useRef(null);
     const LastNameref = useRef(null);
     const GradeLevelref = useRef(null);
@@ -65,62 +69,30 @@ function StudentDirectory(){
         Graderef.current.value=""
     }
 
-    const updateTeacher = (responseID, newTeacher) => {
-      updateDoc(doc(db, "Teacher", responseID), {
-        Teacher: newTeacher
-      })
-      .then((docRef) => {
-        const updatedStudents = [...students]
-        updatedStudents.forEach((student) =>  {
-          console.log(student.id)
-          if (student.id === responseID) {
-            student.Teacher=newTeacher
-          }
-        })
-        setStudents(updatedStudents);
-      })
-      .catch((e) => console.error(e))
-    }
-
-    const updateGrade = (responseID, grade) => {
-      updateDoc(doc(db, "students", responseID), {
-        Grade: grade
-      })
-      .then((docRef) => {
-        const updatedStudents = [...students]
-        updatedStudents.forEach((student) =>  {
-          console.log(student.id)
-          if (student.id === responseID) {
-            student.Grade=grade
-          }
-        })
-        setStudents(updatedStudents);
-      })
-      .catch((e) => console.error(e))
-    }
-
-    const removeStudent =(id) => {
-      deleteDoc(doc(db, "Students", id));
+    const removeStudent = async (id) => {
+      await deleteDoc(doc(db, "Students", id));
+      const inc=removeStudnet+1;
+      setRemovedStudents(inc);
     }
 
       return (//put in links above the h1
         <div style ={container}>
           <div style={headerStyle}>
-            <h1> Student Directory</h1>
+            <br></br>
+            <br></br>
+            <h1>STUDENT DIRECTORY</h1>
+            <br></br>
             <Tabs centered>
-                <Tab label="Home" href="/Administrator" />
-                <Tab label="Teacher Directory" href="./TeacherDirectory" />
+                <Tab style={tabStyle} label={<><HomeIcon />Home</>} href="/" />
+                <Tab style={tabStyle} label={<><EventIcon />Calendar</>} href="/" />
+                <Tab style={tabStyle} label={<><SpeedIcon />Admin Dashboard</>} href="/administrator" />
+                <Tab style={tabStyle} label={<><SchoolIcon />Teacher Directory</>} href="./TeacherDirectory" />
             </Tabs>
-            </div>
+            <br></br>
+          </div>
 
           <div className="studentDirectory">
             <center>
-            <br></br>
-            <Link to='/administrator'><Button
-              variant='outlined'
-              sx={{ color: 'purple', borderColor: 'purple' }}>
-                <SchoolIcon />Administrators</Button></Link>
-              <h1>Student Directory</h1>
               <h3>Add a Student:</h3>
               <form onSubmit={addStudent}>
                     First Name:<br></br>
@@ -148,7 +120,6 @@ function StudentDirectory(){
                 Class={student.Class}
                 Grade={student.Grade}
                 removeStudent={removeStudent}
-                updateGrade={updateGrade}
               />  )}
               </center>
           </div>

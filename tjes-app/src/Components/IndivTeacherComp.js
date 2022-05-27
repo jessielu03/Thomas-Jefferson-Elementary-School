@@ -1,12 +1,16 @@
 import {useState, useEffect, useRef} from "react"
 
 function IndivTeacher (props) {
-    const Classref = useRef(null);
-    const id=props.id;
+    const divStyle = {
+        backgroundColor:"#673AB7",
+        color: "#FFFFFF",
+        width: "500px",
+    }
 
     return (
-        <div className="indivStudent">
-            <h5>{props.FirstName} {props.LastName}</h5>
+        <div className="indivStudent" style={divStyle}>
+            <h3>{props.FirstName} {props.LastName}</h3>
+            <input type="submit" onClick={() => props.removeTeacher(props.id)} value="Remove Teacher" />
         </div>
     );
 }

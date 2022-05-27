@@ -10,49 +10,53 @@ import EventIcon from '@mui/icons-material/Event';
 import { getFirestore, collection, addDoc, doc, getDocs, updateDoc, increment } from "firebase/firestore";
 import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
-import { common } from '@mui/material/colors';
+import {headerStyle, container, tabStyle} from './pagescss.js';
 import TextField from '@mui/material/TextField';
 import Grid from '@mui/material/Grid';
-import Box from '@mui/material/Box';
 import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
-import Select, { SelectChangeEvent } from '@mui/material/Select';
+import Select from '@mui/material/Select';
 
 function Administrator() {
 
   const [classList, setClassList] = useState([]);
-  const [newClass, setNewClass] = useState({});
+  const [teacherList, setTeacherList] = useState([]);
   const [newClassName, setNewClassName] = useState("");
   const [newClassTeacher, setNewClassTeacher] = useState(null);
 
   useEffect(() => {
     console.log("rerendering...");
-      const classes = []
-      getDocs(collection(db, "Classes"))
-      .then((allClasses) => {
-        allClasses.forEach((c) => classes.push({ id: c.id, ...c.data() }))
-        classes.sort()  // TODO
-        setClassList(classes)
-      })
+    const classes = []
+    getDocs(collection(db, "Classes"))
+    .then((allClasses) => {
+      allClasses.forEach((c) => classes.push({ id: c.id, ...c.data() }))
+      classes.sort((a, b) => (a.name > b.name) ? 1 : -1)  // TODO
+      setClassList(classes)
+    })
+    const teachers = []
+    getDocs(collection(db, "Teachers"))
+    .then((allTeachers) => {
+      allTeachers.forEach((t) => teachers.push({ id: t.id, ...t.data() }))
+      teachers.sort()  // TODO
+      setTeacherList(teachers)
+      console.log(teacherList)
+    })
   }, [db])
 
-  const headerStyle = {
-    backgroundColor:"#673AB7",
-    color: common.white,
-    alignItems:"center",
-    justifyContent:'center',
+  const addClass = (e) => {
+    e.preventDefault();  // no reloading the page
+    const newClass = {
+      name: newClassName,
+      students: [],
+      teacher: newClassTeacher
+    }
+    addDoc(collection(db, "Classes"), newClass) // add the new response 
+    .then((docRef) => {
+      setClassList([...classList, {id: docRef.id, ...newClass}]);
+    })
+    .catch((e) => console.error(e))
   }
-  const container ={
-      display:"flex",
-      flexGrow:'1',
-      flexDirection: 'column',
-      textAlign: 'center'
-  }
-  const tabStyle = {
-    color: common.white,
-    textDecoration: 'none'
-  };
 
   return(
     <div style ={container}>
@@ -64,35 +68,51 @@ function Administrator() {
         <Tabs centered>
             <Tab style={tabStyle} label={<><HomeIcon />Home</>} href="/" />
             <Tab style={tabStyle} label={<><EventIcon />Calendar</>} href="/" />
-            <Tab style={tabStyle} label={<><SchoolIcon />Student Directory</>} href="/administrator/StudentDirectory" />
-            <Tab style={tabStyle} label={<><SchoolIcon />Teacher Directory</>} href="/administrator/TeacherDirectory" />
+            <Tab style={tabStyle} label={<><SchoolIcon />Student Directory</>} href="administrator/StudentDirectory" />
+            <Tab style={tabStyle} label={<><SchoolIcon />Teacher Directory</>} href="administrator/TeacherDirectory" />
         </Tabs>
         <br></br>
       </div>
 
       <br></br>
       <br></br>
-
-      <Grid container spacing={10}>
+      
+      <Grid container spacing={4}>
+        <Grid item xs><p fullWidth>    </p></Grid>
+        <Grid item xs><p fullWidth>    </p></Grid>
+        <Grid item xs><p fullWidth>    </p></Grid>
+        <Grid item xs><p fullWidth><b>Add a class: </b></p></Grid>
         <Grid item xs>
-            <TextField 
+            <TextField fullWidth
               id="standard-basic" 
               variant="standard"
-              helperText = "Class Name"
+              helperText = "Class Name (ex. 1A)"
               onChange={(e) => setNewClassName(e.target.value)}
               inputProps={{ defaultValue: null }}
             />
         </Grid>
         <Grid item xs>
-            <TextField 
-              id="standard-basic" 
-              variant="standard"
-              helperText = "Class Name"
-              onChange={(e) => setNewClassTeacher(e.target.value)}
-              inputProps={{ defaultValue: null }}
-            />
+          <FormControl fullWidth>
+            <InputLabel id="demo-simple-select-label">Teacher</InputLabel>
+            <Select
+                labelId="demo-simple-select-label"
+                id="demo-simple-select"
+                label="Teacher"
+                type="submit"
+                onChange={(e) => setNewClassTeacher(e.target.value)}
+            >
+              {teacherList.map((t) =>
+                <MenuItem value={t.FirstName + " " + t.LastName}>{t.FirstName} {t.LastName}</MenuItem>
+              )}
+            </Select>
+          </FormControl>
         </Grid>
-        <Grid item xs><Button>Add Class</Button></Grid>
+        <Grid item xs><Button onClick={addClass}
+          sx={{ color: 'white', backgroundColor: '#673AB7' }}
+          >Add</Button></Grid>
+        <Grid item xs><p fullWidth>    </p></Grid>
+        <Grid item xs><p fullWidth>    </p></Grid>
+        <Grid item xs><p fullWidth>    </p></Grid>
 
       </Grid>
       
@@ -102,10 +122,14 @@ function Administrator() {
       <h4>Class Pages:</h4>
     
       {classList.map((c) => 
-        <Link to='AdminClassPage' state={{ className: c.name, classID: c.id }}>
+
+        // parameters passed to adminclasspage.js
+        <Link to='AdminClassPage' state={{ className: c.name, classID: c.id, teacherName: c.teacher}}>
+
           <Button
           variant='outlined'
-          sx={{ color: 'purple', borderColor: 'purple' }}>Class {c.name}</Button>
+          sx={{ color: '#673AB7', borderColor: '#673AB7' }}>Grade {c.name}</Button>
+          
         </Link>)
       }
     </div>
