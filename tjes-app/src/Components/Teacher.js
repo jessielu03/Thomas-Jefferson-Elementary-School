@@ -30,6 +30,8 @@ import TableCell from '@mui/material/TableCell';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import { deepPurple } from '@mui/material/colors';
+import { common } from "@material-ui/core/colors";
+import HomeIcon from '@mui/icons-material/Home';
 //import Title from './Title';
 
 const drawerWidth = 240;
@@ -103,6 +105,9 @@ function Teacher(){
             <CssBaseline />
             <AppBar position="absolute">
               <Toolbar>
+                <IconButton color="inherit" href="/">
+                    <><HomeIcon />Home</>
+                </IconButton>  
                 <Typography
                   component="h1"
                   variant="h6"
@@ -114,9 +119,7 @@ function Teacher(){
                   Teacher Dashboard
                 </h3>
                 </Typography> 
-                <IconButton color="inherit">
-                    <Link to='/'>Home</Link>
-                </IconButton>               
+                             
               </Toolbar>
             </AppBar>
             <Box
