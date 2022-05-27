@@ -86,7 +86,7 @@ function TeacherDirectory(){
             <br></br>
             <Tabs centered>
                 <Tab style={tabStyle} label={<><HomeIcon />Home</>} href="/" />
-                <Tab style={tabStyle} label={<><EventIcon />Calendar</>} href="/" />
+                <Tab style={tabStyle} label={<><EventIcon />Calendar</>} href="/calendar" />
                 <Tab style={tabStyle} label={<><SpeedIcon />Admin Dashboard</>} href="/administrator" />
                 <Tab style={tabStyle} label={<><SchoolIcon />Student Directory</>} href="./StudentDirectory" />
             </Tabs>

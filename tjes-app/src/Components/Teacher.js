@@ -32,7 +32,7 @@ import TableRow from '@mui/material/TableRow';
 import { deepPurple } from '@mui/material/colors';
 import { common } from "@material-ui/core/colors";
 import HomeIcon from '@mui/icons-material/Home';
-import CalendarComp from "./Calendar.js";
+import CalendarComp from "./CalendarComp.js";
 //import Title from './Title';
 
 const drawerWidth = 240;
@@ -192,18 +192,7 @@ function Teacher(){
                     
                     <br></br>
                     {/* Calendar */}
-                    <Paper
-                        sx={{
-                        p: 2,
-                        display: 'flex',
-                        flexDirection: 'column',
-                        }}
-                    >
-                            <React.Fragment>
-                    <Typography component="h2" variant="h6" color="primary" gutterBottom> Calendar </Typography>
-                    <CalendarComp/>
-                    </React.Fragment>
-                    </Paper>
+                    <CalendarComp />
                   </Grid>
                 </Grid>
               </Container>
