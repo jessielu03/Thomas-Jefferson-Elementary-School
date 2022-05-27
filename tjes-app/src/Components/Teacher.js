@@ -29,6 +29,7 @@ import TableBody from '@mui/material/TableBody';
 import TableCell from '@mui/material/TableCell';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
+import { deepPurple } from '@mui/material/colors';
 //import Title from './Title';
 
 const drawerWidth = 240;
@@ -51,7 +52,13 @@ const AppBar = styled(MuiAppBar, {
     }),
   }));
 
-const mdTheme = createTheme();
+const mdTheme = createTheme({
+    palette: {
+      primary: {
+        main: deepPurple[500],
+      },
+    },
+  });
 
 function Teacher(){
 
@@ -73,9 +80,9 @@ function Teacher(){
     }, [db])
 
     // upvote feature
-    const upvote = (studentID) => {
-        updateDoc(doc(db, "Students", studentID), {
-            GradeLevel: increment(1)  
+    const update = (studentID, gradeChange) => {
+        updateDoc(doc(db, "Students", studentID, gradeChange), {
+            Grade: gradeChange  
         })
         .then((docRef) => {
         // update the state variable
@@ -83,10 +90,9 @@ function Teacher(){
         updatedStudents.forEach((student) =>  {
             //console.log(entry.id)
             if (student.id === studentID) {
-            student.GradeLevel++
+                student.Grade = gradeChange
             }
         })
-        updatedStudents.sort((a, b) => (a.GradeLevel < b.GradeLevel) ? 1 : -1)
         setStudents(updatedStudents)
         })
         .catch((e) => console.error(e))
@@ -107,7 +113,9 @@ function Teacher(){
                   noWrap
                   sx={{ flexGrow: 1 }}
                 >
+                <h3>
                   Teacher Dashboard
+                </h3>
                 </Typography> 
                 <IconButton color="inherit">
                     <Link to='/'>Home</Link>
@@ -180,7 +188,7 @@ function Teacher(){
         </TableHead>
         <TableBody>
           {students.map((row) => (
-            <StudentObj key={row.id} id={row.id} studentFirst={row.FirstName} studentLast={row.LastName} studentClass={row.Class} gradeLetter={row.Grade}/>
+            <StudentObj key={row.id} id={row.id} studentFirst={row.FirstName} studentLast={row.LastName} studentClass={row.Class} gradeLetter={row.Grade} />
           ))}
         </TableBody>
       </Table>
