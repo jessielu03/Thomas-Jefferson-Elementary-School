@@ -213,7 +213,6 @@ function Teacher(){
                 <h3>Students:</h3>
                 {students.map((Students) => <StudentObj key={Students.id} id={Students.id} studentFirst={Students.FirstName} studentLast={Students.LastName} gradeLetter={Students.GradeLevel} upvote={upvote}/>)}
             </div>
-
             
             
             } 

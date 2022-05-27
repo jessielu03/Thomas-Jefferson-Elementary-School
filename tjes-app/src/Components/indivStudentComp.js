@@ -44,16 +44,13 @@ function IndivStudent (props) {
                 <input type="text" value={props.Grade} ref={Graderef}/><br></br>
                 <input type="submit" value="Update Grade"/>
             </form>
-
             <p>Grade Level: {props.GradeLevel}</p>
             <p>Teacher: {props.Teacher}</p>
             <p>Class: {props.Class}</p>
             <p>Grade: {props.Grade}</p>
-
                alert(props.Class.name) 
     doc(db, referenceField)
     const studnet 
-
     then call .data
 */
 

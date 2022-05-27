@@ -1,5 +1,4 @@
 import { common } from '@mui/material/colors';
-
 // function pagescss(){
     const headerStyle = {
         backgroundColor:"#673AB7",
@@ -26,4 +25,11 @@ import { common } from '@mui/material/colors';
         color: "#673AB7",
         fontSize: '30px'
     }
-export{headerStyle, container, tabStyle, purpleFont, purpleFont2};
+    const studentCardStyle ={
+        flex: '1',
+        padding:'20',
+        margin:'.25rem',
+        border: '15px solid white'
+        // backgroundColor: "black"
+    }
+export{headerStyle, container, tabStyle, purpleFont, purpleFont2,studentCardStyle};
