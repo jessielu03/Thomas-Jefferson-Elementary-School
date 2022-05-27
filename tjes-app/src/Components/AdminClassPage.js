@@ -140,7 +140,9 @@ function AdminClassPage(props){
                 <h2>Class Roster</h2>
             </div>
             <div style = {studentCardStyle}>
+            <Grid container spacing={3}> 
             {classList.map((c) => 
+            <Grid item xs = {6}>
             <Box style = {studentCardStyle}>
                 <Card sx={{ maxWidth: 200}}>
                     <CardMedia
@@ -159,7 +161,9 @@ function AdminClassPage(props){
                     </CardContent>
                 </Card>
                 </Box>
+                </Grid>
             )}
+            </Grid>     
             {/* {thisClass.map((c) => <h3>{c.FirstName}</h3>)} */}
             </div>
         </div>
