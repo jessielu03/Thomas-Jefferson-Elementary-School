@@ -8,7 +8,7 @@ import {Link} from "react-router-dom";
 import Button from '@mui/material/Button';
 import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
-import {headerStyle, container, tabStyle} from './pagescss.js';
+import {headerStyle, container, tabStyle, studentCardStyle} from './pagescss.js';
 import SchoolIcon from '@mui/icons-material/School';
 import HomeIcon from '@mui/icons-material/Home';
 import EventIcon from '@mui/icons-material/Event';
@@ -19,6 +19,13 @@ import FormControl from '@mui/material/FormControl';
 import MenuItem from '@mui/material/MenuItem';
 import InputLabel from '@mui/material/InputLabel';
 import Select from '@mui/material/Select';
+
+import Box from '@mui/material/Box';
+import Card from '@mui/material/Card';
+import CardContent from '@mui/material/CardContent';
+import Typography from '@mui/material/Typography';
+import CardMedia from '@mui/material/CardMedia';
+import CardActions from'@mui/material/CardActions';
 
 
 
@@ -66,9 +73,8 @@ function TeacherDirectory(){
     const removeSingleTeacher = async (id) => {
       await deleteDoc(doc(db, "Teachers", id));
       const inc=removeTeacher+1;
-      console.log(inc)
       setRemoveTeacher(inc);
-      console.log(removeTeacher)
+      alert("Teacher Removed - Refresh Page to Show Removed Teacher")
     }
 
       return (
@@ -137,14 +143,39 @@ function TeacherDirectory(){
               <Grid item xs><p fullWidth>    </p></Grid>
 
             </Grid>
-              {teachers.map((teacher)=> <IndivTeacher 
-                FirstName={teacher.FirstName}
-                LastName={teacher.LastName}
-                Class={teacher.Class}
-                id={teacher.id}
-                removeTeacher={removeSingleTeacher}
-              />   )}
-              </center>
+            </center>
+
+          <div style = {studentCardStyle}>
+            <Grid container spacing={3}> 
+            {teachers.map((c) => 
+            <Grid item xs={3}>
+            <Box style = {studentCardStyle}>
+                <Card sx={{ maxWidth: 200}}>
+                    <CardMedia
+                    component="img"
+                    height="140"
+                    alt="student image"
+                    image='https://image.shutterstock.com/image-vector/user-icon-trendy-flat-style-260nw-418179856.jpg'
+                    />
+                    <CardContent>
+                        <Typography gutterBottom variant="h5" component="div">
+                        {c.FirstName} {c.LastName}
+                        </Typography>
+                    </CardContent>
+                    <CardActions>
+                      <Button size="small" color="primary" type="submit" onClick={() => (removeSingleTeacher(c.id))}>
+                        Remove Teacher
+                      </Button>
+                    </CardActions>
+                </Card>
+                </Box>
+              </Grid>
+            )}
+            {/* {thisClass.map((c) => <h3>{c.FirstName}</h3>)} */}
+            </Grid>
+          </div>
+
+
           </div>
           </div>
       );
